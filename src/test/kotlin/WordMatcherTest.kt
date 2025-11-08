@@ -1,6 +1,7 @@
 import io.github.cbaumont.WordGuess
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class WordMatcherTest {
@@ -72,6 +73,18 @@ class WordMatcherTest {
 
         assertEquals(expected, guess.matches)
         assertTrue(guess.fullMatch)
+    }
+
+    @Test
+    fun `does not match when guess letters are out of order`() {
+        val correctWord = "BRAZIL"
+
+        val guess = WordGuess(
+            value = "RAZILB",
+            correctWord = correctWord
+        )
+
+        assertFalse(guess.fullMatch)
     }
 }
 

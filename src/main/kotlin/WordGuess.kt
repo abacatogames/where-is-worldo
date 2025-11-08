@@ -19,5 +19,5 @@ data class WordGuess(
                 acc
             }
     }
-    val fullMatch: Boolean = matches.values.all { it }
+    val fullMatch: Boolean = value.uppercase() == correctWord.uppercase()
 }
