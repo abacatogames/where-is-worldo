@@ -21,6 +21,31 @@ import kotlinx.html.textInput
 import kotlinx.html.title
 
 fun main() {
+    fun GameRendering.Companion.webRendering(): GameRendering = object : GameRendering {
+        override fun renderGuess(guess: WordGuess): String {
+
+            TODO("Not yet implemented")
+        }
+
+        override fun readUserInput(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun showMessage(message: String) {
+
+        }
+
+    }
+
+    val game = GameLoop(
+        gameRendering = GameRendering.webRendering(),
+        maxAttempts = 7,
+        proposedWord = "GREENLAND",
+        gameIntro = "Where is Worldo today?"
+    )
+
+    val previousGuesses = mutableListOf<WordGuess?>()
+
     embeddedServer(Netty, port = 8080) {
         routing {
             get("/") {
@@ -35,9 +60,9 @@ fun main() {
                     }
                     body {
                         div("container") {
-                            h1 { +"Unlimited Wordle-Style Game" }
+                            h1 { +game.gameIntro }
                             p("instructions") {
-                                +"Guess the secret word. There is no limit on guess length."
+                                +"Start by making a guess."
                             }
 
                             form(action = "/", method = FormMethod.post) {
@@ -50,18 +75,16 @@ fun main() {
                             }
 
                             div("board") {
-//                                for ((guess, result) in previousGuesses) {
-//                                    div("row") {
-//                                        for (r in result) {
-//                                            val cls = when (r.status) {
-//                                                Status.CORRECT -> "correct"
-//                                                Status.PRESENT -> "present"
-//                                                Status.ABSENT -> "absent"
-//                                            }
-//                                            div("tile $cls") { +r.char.toString() }
-//                                        }
-//                                    }
-//                                }
+                                for (guess in previousGuesses.filterNotNull()) {
+                                    div("row") {
+                                        guess.matches.map {
+                                            val cls = if (it.value) "correct" else "absent"
+                                            div("tile $cls") {
+                                                +guess.value[it.key].toString()
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -71,8 +94,7 @@ fun main() {
                 val params = call.receiveParameters()
                 val guess = params["guess"]?.trim().orEmpty()
                 if (guess.isNotBlank()) {
-//                    val result = validateGuess(secret, guess)
-//                    previousGuesses += guess to result
+                    previousGuesses += game.softValidation(guess)
                 }
                 call.respondRedirect("/")
             }

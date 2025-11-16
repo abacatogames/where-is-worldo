@@ -5,8 +5,8 @@ import io.github.cbaumont.WordOfTheDay.LocationOfTheDay
 class GameLoop(
     private val gameRendering: GameRendering,
     private val maxAttempts: Int = 6,
+    val gameIntro: String = "$worldo\nWhere is Worldo today?\nStart by making a guess: ",
     proposedWord: String,
-    gameIntro: String = "$worldo\nWhere is Worldo today?\nStart by making a guess: ",
 ) {
     val wordOfTheDay: WordOfTheDay = WordOfTheDay.of(proposedWord, { it.isLocationValid() }, { LocationOfTheDay(it) })
 
@@ -44,6 +44,15 @@ class GameLoop(
             return true
         }
         return false
+    }
+
+    fun softValidation(guess: String): WordGuess? {
+        if (!guess.isLocationValid()) {
+            gameRendering.showMessage("Invalid location :(")
+            return null
+        }
+        val wordGuess = WordGuess(guess, wordOfTheDay.value)
+        return wordGuess
     }
 }
 

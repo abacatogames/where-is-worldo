@@ -11,6 +11,7 @@ import kotlinx.css.FontWeight
 import kotlinx.css.JustifyContent
 import kotlinx.css.Margin
 import kotlinx.css.Padding
+import kotlinx.css.TextAlign
 import kotlinx.css.alignItems
 import kotlinx.css.backgroundColor
 import kotlinx.css.border
@@ -32,7 +33,9 @@ import kotlinx.css.margin
 import kotlinx.css.marginBottom
 import kotlinx.css.maxWidth
 import kotlinx.css.padding
+import kotlinx.css.pct
 import kotlinx.css.px
+import kotlinx.css.textAlign
 import kotlinx.css.width
 
 val styles = CssBuilder().apply {
@@ -43,12 +46,26 @@ val styles = CssBuilder().apply {
         margin = Margin(0.px)
         padding = Padding(0.px)
     }
+    rule("html, body") {
+        height = 100.pct
+        margin = Margin(0.px)
+        padding = Padding(0.px)
+    }
     rule("body") {
+        display = Display.flex
+        flexDirection = FlexDirection.column
+        justifyContent = JustifyContent.flexStart
+        alignItems = Align.center
+        backgroundColor = Color("#121213")
+        color = Color("#d7dadc")
+        fontFamily = "Inter, sans-serif"
         padding = Padding(32.px)
     }
     rule(".container") {
-        maxWidth = 800.px
+        maxWidth = 700.px
+        width = 100.pct
         margin = Margin(0.px)
+        textAlign = TextAlign.center
     }
     h1 {
         fontSize = 2.em
@@ -86,10 +103,12 @@ val styles = CssBuilder().apply {
         display = Display.flex
         flexDirection = FlexDirection.column
         gap = 8.px
+        alignItems = Align.center
     }
     rule(".row") {
         display = Display.flex
         gap = 8.px
+        alignItems = Align.center
     }
     rule(".tile") {
         display = Display.flex
