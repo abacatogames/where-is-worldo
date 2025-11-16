@@ -2,9 +2,9 @@ package io.github.cbaumont
 
 import kotlinx.css.Align
 import kotlinx.css.Border
+import kotlinx.css.BorderStyle
 import kotlinx.css.Color
 import kotlinx.css.CssBuilder
-import kotlinx.css.Cursor
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.FontWeight
@@ -17,7 +17,6 @@ import kotlinx.css.backgroundColor
 import kotlinx.css.border
 import kotlinx.css.borderRadius
 import kotlinx.css.color
-import kotlinx.css.cursor
 import kotlinx.css.display
 import kotlinx.css.em
 import kotlinx.css.flexDirection
@@ -29,6 +28,7 @@ import kotlinx.css.gap
 import kotlinx.css.h1
 import kotlinx.css.height
 import kotlinx.css.justifyContent
+import kotlinx.css.letterSpacing
 import kotlinx.css.margin
 import kotlinx.css.marginBottom
 import kotlinx.css.maxWidth
@@ -69,7 +69,7 @@ val styles = CssBuilder().apply {
     }
     h1 {
         fontSize = 2.em
-        fontWeight = FontWeight.Companion.bold
+        fontWeight = FontWeight.bold
         marginBottom = 16.px
     }
     rule(".instructions") {
@@ -84,20 +84,16 @@ val styles = CssBuilder().apply {
     rule("input[type=text]") {
         flexGrow = 1.0
         padding = Padding(12.px)
-        fontSize = 1.em
+        fontFamily = "monospace"
+        fontWeight = FontWeight.bold
+        fontSize = 20.px
+        letterSpacing = 8.px
         borderRadius = 8.px
-        border = Border.Companion.none
+        width = 200.px
+        border = Border(2.px, BorderStyle.solid, Color("#3a3a3c"))
         backgroundColor = Color("#0b0b0c")
         color = Color("#d7dadc")
-    }
-    rule("button") {
-        backgroundColor = Color("#8ab4f8")
-        color = Color.Companion.black
-        border = Border.Companion.none
-        borderRadius = 8.px
-        padding = Padding(12.px, 16.px)
-        fontWeight = FontWeight.Companion.bold
-        cursor = Cursor.pointer
+        textAlign = TextAlign.center
     }
     rule(".board") {
         display = Display.flex
@@ -116,11 +112,11 @@ val styles = CssBuilder().apply {
         alignItems = Align.center
         width = 48.px
         height = 58.px
-        fontWeight = FontWeight.Companion.bold
+        fontWeight = FontWeight.bold
         fontSize = 20.px
         borderRadius = 6.px
         backgroundColor = Color("#3a3a3c")
-        color = Color.Companion.white
+        color = Color.white
     }
     rule(".tile.correct") {
         backgroundColor = Color("#538d4e")

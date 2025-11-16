@@ -16,7 +16,6 @@ import kotlinx.html.h1
 import kotlinx.html.head
 import kotlinx.html.p
 import kotlinx.html.style
-import kotlinx.html.submitInput
 import kotlinx.html.textInput
 import kotlinx.html.title
 
@@ -67,10 +66,8 @@ fun main() {
 
                             form(action = "/", method = FormMethod.post) {
                                 textInput(name = "guess") {
-                                    placeholder = "Type your guess here"
-                                }
-                                submitInput {
-                                    value = "Submit"
+                                    placeholder = "TYPE HERE"
+                                    autoFocus = true
                                 }
                             }
 
