@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.2.0"
+    id("io.ktor.plugin") version "3.3.2"
     application
 }
 
@@ -12,6 +13,11 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.jetbrains.kotlinx:kotlinx-html:0.12.0")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-css:2025.11.5")
+    implementation("io.ktor:ktor-server-core")
+    implementation("io.ktor:ktor-server-netty")
+    implementation("io.ktor:ktor-server-html-builder")
 }
 
 tasks.test {
