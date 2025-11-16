@@ -17,41 +17,20 @@ class GameLoop(
     fun mainLoop() {
         var guess = gameRendering.readUserInput()
 
-        var result = validateGuess(guess)
         var currentAttempt = 1
 
-        while(!result && currentAttempt <= maxAttempts) {
+        var result = validateGuess(guess)
+
+        while (!result && ++currentAttempt <= maxAttempts) {
             gameRendering.showMessage("Make another guess: ")
             guess = gameRendering.readUserInput()
             result = validateGuess(guess)
-            currentAttempt++
         }
 
-        if(!result) gameRendering.showMessage("You lost :(")
-
-//        var wordGuess = WordGuess(guess, wordOfTheDay.value)
-//        var fullMatch = wordGuess.fullMatch
-//
-//        while (!fullMatch && currentAttempt <= maxAttempts) {
-//            if (!guess.isLocationValid()) {
-//                gameRendering.showMessage("Invalid location :(")
-//            } else {
-//                gameRendering.showMessage(gameRendering.renderGuess(wordGuess))
-//            }
-//            gameRendering.showMessage("Make another guess: ")
-//            guess = gameRendering.readUserInput()
-//            wordGuess = WordGuess(guess, wordOfTheDay.value)
-//            fullMatch = wordGuess.fullMatch
-//            currentAttempt++
-//        }
-//        if (fullMatch) {
-//            gameRendering.showMessage(gameRendering.renderGuess(wordGuess))
-//            gameRendering.showMessage("You won!")
-//        } else gameRendering.showMessage("You lost :(")
+        if (!result) gameRendering.showMessage("You lost :(")
     }
 
-    private fun validateGuess(guess: String, currentAttempt: Int = 1): Boolean {
-        if (currentAttempt > maxAttempts) return false
+    private fun validateGuess(guess: String): Boolean {
         val wordGuess = WordGuess(guess, wordOfTheDay.value)
         val renderedGuess = gameRendering.renderGuess(wordGuess)
         if (!guess.isLocationValid()) {
@@ -61,7 +40,6 @@ class GameLoop(
             gameRendering.showMessage(renderedGuess)
         }
         if (wordGuess.fullMatch) {
-//            gameRendering.showMessage(renderedGuess)
             gameRendering.showMessage("You won!")
             return true
         }

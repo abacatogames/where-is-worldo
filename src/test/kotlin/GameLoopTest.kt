@@ -29,14 +29,14 @@ class GameLoopTest {
     @Test
     fun `game lost main loop test`() {
         val rendering = SpyRendering("ARGENTINA")
-        val game = GameLoop(gameRendering = rendering, maxAttempts = 1, proposedWord = "BRAZIL")
+        val game = GameLoop(gameRendering = rendering, maxAttempts = 2, proposedWord = "BRAZIL")
 
         game.mainLoop()
 
         assertContains(rendering.messages, "ARGENTINA")
         assertContains(rendering.messages, "Make another guess: ")
         assertContains(rendering.messages, "You lost :(")
-        assertEquals(4, rendering.messages.size)
+        assertEquals(5, rendering.messages.size)
     }
 
     @Test
@@ -59,9 +59,8 @@ class GameLoopTest {
         game.mainLoop()
 
         assertContains(rendering.messages, "Invalid location :(")
-        assertContains(rendering.messages, "Make another guess: ")
         assertContains(rendering.messages, "You lost :(")
-        assertEquals(4, rendering.messages.size)
+        assertEquals(3, rendering.messages.size)
     }
 
 }
