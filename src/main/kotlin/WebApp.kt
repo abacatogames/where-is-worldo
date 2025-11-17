@@ -13,8 +13,8 @@ import kotlinx.html.body
 import kotlinx.html.div
 import kotlinx.html.form
 import kotlinx.html.h1
+import kotlinx.html.h2
 import kotlinx.html.head
-import kotlinx.html.p
 import kotlinx.html.style
 import kotlinx.html.textInput
 import kotlinx.html.title
@@ -38,7 +38,7 @@ fun main() {
 
     val game = GameLoop(
         gameRendering = GameRendering.webRendering(),
-        maxAttempts = 7,
+        maxAttempts = 6,
         proposedWord = "GREENLAND",
         gameIntro = "Where is Worldo today?"
     )
@@ -60,19 +60,39 @@ fun main() {
                     body {
                         div("container") {
                             h1 { +game.gameIntro }
-                            p("instructions") {
-                                +"Start by making a guess."
+                            h2("instructions") {
+                                +"Worldo may be in any country in the world."
                             }
 
-                            form(action = "/", method = FormMethod.post) {
-                                textInput(name = "guess") {
-                                    placeholder = "TYPE HERE"
-                                    autoFocus = true
+                            val validGuesses = previousGuesses.filterNotNull()
+
+                            if (validGuesses.lastOrNull()?.fullMatch == true) {
+                                h2("won") {
+                                    +"Congratulations, you found Worldo!"
+                                }
+                            } else if (validGuesses.size >= game.maxAttempts) {
+                                h2("lost") {
+                                    +"You’re out of attempts for today — better luck tomorrow!"
+                                }
+                            } else {
+                                if (previousGuesses.isNotEmpty() && previousGuesses.lastOrNull() == null) {
+                                    h2("invalid") {
+                                        +"Invalid country, please make another guess."
+                                    }
+                                } else if (previousGuesses.isEmpty()) {
+                                    h2 { +"Start by making a guess." }
+                                } else {
+                                    h2 { +"You have ${game.maxAttempts - validGuesses.size} attempts left. Make another guess." }
+                                }
+                                form(action = "/", method = FormMethod.post) {
+                                    textInput(name = "guess") {
+                                        placeholder = "TYPE HERE"
+                                        autoFocus = true
+                                    }
                                 }
                             }
-
                             div("board") {
-                                for (guess in previousGuesses.filterNotNull()) {
+                                for (guess in validGuesses) {
                                     div("row") {
                                         guess.matches.map {
                                             val cls = if (it.value) "correct" else "absent"
@@ -88,11 +108,11 @@ fun main() {
                 }
             }
             post("/") {
-                val params = call.receiveParameters()
-                val guess = params["guess"]?.trim().orEmpty()
-                if (guess.isNotBlank()) {
-                    previousGuesses += game.softValidation(guess)
-                }
+                call.receiveParameters()["guess"]
+                    ?.trim()
+                    ?.takeIf(String::isNotBlank)
+                    ?.let(game::softValidation)
+                    .let(previousGuesses::add)
                 call.respondRedirect("/")
             }
         }

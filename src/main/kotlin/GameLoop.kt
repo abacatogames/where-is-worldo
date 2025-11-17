@@ -4,7 +4,7 @@ import io.github.cbaumont.WordOfTheDay.LocationOfTheDay
 
 class GameLoop(
     private val gameRendering: GameRendering,
-    private val maxAttempts: Int = 6,
+    val maxAttempts: Int = 6,
     val gameIntro: String = "$worldo\nWhere is Worldo today?\nStart by making a guess: ",
     proposedWord: String,
 ) {

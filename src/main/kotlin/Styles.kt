@@ -26,6 +26,7 @@ import kotlinx.css.fontSize
 import kotlinx.css.fontWeight
 import kotlinx.css.gap
 import kotlinx.css.h1
+import kotlinx.css.h2
 import kotlinx.css.height
 import kotlinx.css.justifyContent
 import kotlinx.css.letterSpacing
@@ -72,9 +73,17 @@ val styles = CssBuilder().apply {
         fontWeight = FontWeight.bold
         marginBottom = 16.px
     }
-    rule(".instructions") {
-        color = Color("#818384")
+    h2 {
+        fontSize = 1.em
+        fontWeight = FontWeight.bold
         marginBottom = 24.px
+        color = Color("#818384")
+    }
+    rule(".won") {
+        color = Color("#538d4e")
+    }
+    rule(".invalid") {
+        color = Color("#b59f3b")
     }
     rule("form") {
         display = Display.flex
