@@ -1,5 +1,7 @@
 package io.github.cbaumont
 
+import io.github.cbaumont.view.GameView
+import io.github.cbaumont.view.webView
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.html.respondHtml
 import io.ktor.server.netty.Netty
@@ -20,33 +22,16 @@ import kotlinx.html.textInput
 import kotlinx.html.title
 
 fun main() {
-    fun GameRendering.Companion.webRendering(): GameRendering = object : GameRendering {
-        override fun renderGuess(guess: WordGuess): String {
-
-            TODO("Not yet implemented")
-        }
-
-        override fun readUserInput(): String {
-            TODO("Not yet implemented")
-        }
-
-        override fun showMessage(message: String) {
-
-        }
-
-    }
-
-    val game = GameLoop(
-        gameRendering = GameRendering.webRendering(),
-        maxAttempts = 6,
-        proposedWord = "GREENLAND",
-        gameIntro = "Where is Worldo today?"
-    )
-
     val previousGuesses = mutableListOf<WordGuess?>()
 
     embeddedServer(Netty, port = 8080) {
         routing {
+            val game = GameLoop(
+                gameView = GameView.webView(),
+                maxAttempts = 6,
+                proposedWord = "GREENLAND",
+                gameIntro = "Where is Worldo today?"
+            )
             get("/") {
                 call.respondHtml {
                     head {

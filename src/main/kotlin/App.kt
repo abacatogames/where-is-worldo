@@ -1,8 +1,11 @@
 package io.github.cbaumont
 
+import io.github.cbaumont.view.CLIView
+import io.github.cbaumont.view.GameView
+
 fun main() {
     GameLoop(
-        gameRendering = GameRendering.cliRendering(),
+        gameView = GameView.CLIView(),
         proposedWord = "GREENLAND",
     ).mainLoop()
 }

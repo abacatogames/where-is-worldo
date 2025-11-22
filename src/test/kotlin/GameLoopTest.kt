@@ -1,5 +1,5 @@
 import io.github.cbaumont.GameLoop
-import io.github.cbaumont.GameRendering
+import io.github.cbaumont.view.GameView
 import io.github.cbaumont.WordGuess
 import kotlin.test.Test
 import kotlin.test.assertContains
@@ -12,7 +12,7 @@ class GameLoopTest {
     fun `invalid location is not allowed as word of the day`() {
         assertFails("Unable to start game: invalid location") {
             GameLoop(
-                gameRendering = SpyRendering(""),
+                gameView = SpyView(""),
                 proposedWord = "TEST",
             )
         }
@@ -20,7 +20,7 @@ class GameLoopTest {
 
     @Test
     fun `intro message is displayed`() {
-        val rendering = SpyRendering("ARGENTINA")
+        val rendering = SpyView("ARGENTINA")
         GameLoop(rendering, proposedWord = "BRAZIL", gameIntro = "Intro message")
 
         assertContains(rendering.messages, "Intro message")
@@ -28,8 +28,8 @@ class GameLoopTest {
 
     @Test
     fun `game lost main loop test`() {
-        val rendering = SpyRendering("ARGENTINA")
-        val game = GameLoop(gameRendering = rendering, maxAttempts = 2, proposedWord = "BRAZIL")
+        val rendering = SpyView("ARGENTINA")
+        val game = GameLoop(gameView = rendering, maxAttempts = 2, proposedWord = "BRAZIL")
 
         game.mainLoop()
 
@@ -41,8 +41,8 @@ class GameLoopTest {
 
     @Test
     fun `game won main loop test`() {
-        val rendering = SpyRendering("BRAZIL")
-        val game = GameLoop(gameRendering = rendering, maxAttempts = 1, proposedWord = "BRAZIL")
+        val rendering = SpyView("BRAZIL")
+        val game = GameLoop(gameView = rendering, maxAttempts = 1, proposedWord = "BRAZIL")
 
         game.mainLoop()
 
@@ -53,8 +53,8 @@ class GameLoopTest {
 
     @Test
     fun `invalid location main loop test`() {
-        val rendering = SpyRendering("ENGLAND")
-        val game = GameLoop(gameRendering = rendering, maxAttempts = 1, proposedWord = "BRAZIL")
+        val rendering = SpyView("ENGLAND")
+        val game = GameLoop(gameView = rendering, maxAttempts = 1, proposedWord = "BRAZIL")
 
         game.mainLoop()
 
@@ -65,13 +65,13 @@ class GameLoopTest {
 
 }
 
-private class SpyRendering(
+private class SpyView(
     val userInput: String,
-) : GameRendering {
+) : GameView {
     val messages: MutableList<String> = mutableListOf()
-    override fun renderGuess(guess: WordGuess): String = guess.value
-    override fun readUserInput(): String = userInput
-    override fun showMessage(message: String) {
+    override fun displayGuess(guess: WordGuess): String = guess.value
+    override fun readInput(): String = userInput
+    override fun displayMessage(message: String) {
         messages.add(message)
     }
 }

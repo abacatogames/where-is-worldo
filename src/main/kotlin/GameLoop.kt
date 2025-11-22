@@ -1,9 +1,10 @@
 package io.github.cbaumont
 
 import io.github.cbaumont.WordOfTheDay.LocationOfTheDay
+import io.github.cbaumont.view.GameView
 
 class GameLoop(
-    private val gameRendering: GameRendering,
+    val gameView: GameView,
     val maxAttempts: Int = 6,
     val gameIntro: String = "$worldo\nWhere is Worldo today?\nStart by making a guess: ",
     proposedWord: String,
@@ -11,36 +12,36 @@ class GameLoop(
     val wordOfTheDay: WordOfTheDay = WordOfTheDay.of(proposedWord, { it.isLocationValid() }, { LocationOfTheDay(it) })
 
     init {
-        gameRendering.showMessage(gameIntro)
+        gameView.displayMessage(gameIntro)
     }
 
     fun mainLoop() {
-        var guess = gameRendering.readUserInput()
+        var guess = gameView.readInput()
 
         var currentAttempt = 1
 
         var result = validateGuess(guess)
 
         while (!result && ++currentAttempt <= maxAttempts) {
-            gameRendering.showMessage("Make another guess: ")
-            guess = gameRendering.readUserInput()
+            gameView.displayMessage("Make another guess: ")
+            guess = gameView.readInput()
             result = validateGuess(guess)
         }
 
-        if (!result) gameRendering.showMessage("You lost :(")
+        if (!result) gameView.displayMessage("You lost :(")
     }
 
     private fun validateGuess(guess: String): Boolean {
         val wordGuess = WordGuess(guess, wordOfTheDay.value)
-        val renderedGuess = gameRendering.renderGuess(wordGuess)
+        val renderedGuess = gameView.displayGuess(wordGuess)
         if (!guess.isLocationValid()) {
-            gameRendering.showMessage("Invalid location :(")
+            gameView.displayMessage("Invalid location :(")
             return false
         } else {
-            gameRendering.showMessage(renderedGuess)
+            gameView.displayMessage(renderedGuess)
         }
         if (wordGuess.fullMatch) {
-            gameRendering.showMessage("You won!")
+            gameView.displayMessage("You won!")
             return true
         }
         return false
@@ -48,7 +49,7 @@ class GameLoop(
 
     fun softValidation(guess: String): WordGuess? {
         if (!guess.isLocationValid()) {
-            gameRendering.showMessage("Invalid location :(")
+            gameView.displayMessage("Invalid location :(")
             return null
         }
         val wordGuess = WordGuess(guess, wordOfTheDay.value)
