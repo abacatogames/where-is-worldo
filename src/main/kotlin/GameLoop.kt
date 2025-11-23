@@ -9,7 +9,7 @@ class GameLoop(
     val gameIntro: String = "$worldo\nWhere is Worldo today?\nStart by making a guess: ",
     proposedWord: String,
 ) {
-    val wordOfTheDay: WordOfTheDay = WordOfTheDay.of(proposedWord, { it.isLocationValid() }, { LocationOfTheDay(it) })
+    val wordOfTheDay: WordOfTheDay = WordOfTheDay.of(proposedWord, { it.isAValidCountry() }, { LocationOfTheDay(it) })
 
     init {
         gameView.displayMessage(gameIntro)
@@ -34,7 +34,7 @@ class GameLoop(
     private fun validateGuess(guess: String): Boolean {
         val wordGuess = WordGuess(guess, wordOfTheDay.value)
         val renderedGuess = gameView.displayGuess(wordGuess)
-        if (!guess.isLocationValid()) {
+        if (!guess.isAValidCountry()) {
             gameView.displayMessage("Invalid location :(")
             return false
         } else {
@@ -47,28 +47,4 @@ class GameLoop(
         return false
     }
 
-    fun softValidation(guess: String): WordGuess? {
-        if (!guess.isLocationValid()) {
-            gameView.displayMessage("Invalid location :(")
-            return null
-        }
-        val wordGuess = WordGuess(guess, wordOfTheDay.value)
-        return wordGuess
-    }
-}
-
-sealed interface WordOfTheDay {
-    val value: String
-
-    @JvmInline
-    value class LocationOfTheDay internal constructor(override val value: String) : WordOfTheDay
-
-    companion object {
-        fun of(
-            rawValue: String?,
-            validation: (String) -> Boolean,
-            constructor: (String) -> WordOfTheDay
-        ): WordOfTheDay = rawValue?.takeIf { validation(it) }?.let { constructor(it) }
-            ?: error("Unable to start the game with word: $rawValue")
-    }
 }

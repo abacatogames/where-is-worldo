@@ -1,8 +1,6 @@
 package io.github.cbaumont
 
-import io.github.cbaumont.view.GameView
-import io.github.cbaumont.view.generatePage
-import io.github.cbaumont.view.webView
+import io.github.cbaumont.view.WebView
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.TextContent
@@ -17,20 +15,16 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
 
 fun main() {
-    val previousGuesses = mutableListOf<WordGuess?>()
-
     embeddedServer(Netty, port = 8080) {
         routing {
-            val game = GameLoop(
-                gameView = GameView.webView(),
+            val game = WebGame(
                 maxAttempts = 6,
                 proposedWord = "GREENLAND",
-                gameIntro = "Where is Worldo today?"
             )
             get("/") {
                 call.respond(
                     TextContent(
-                        generatePage(game, previousGuesses),
+                        WebView.create()(game),
                         ContentType.Text.Html.withCharset(Charsets.UTF_8),
                         HttpStatusCode.OK
                     )
@@ -40,8 +34,7 @@ fun main() {
                 call.receiveParameters()["guess"]
                     ?.trim()
                     ?.takeIf(String::isNotBlank)
-                    ?.let(game::softValidation)
-                    .let(previousGuesses::add)
+                    ?.let(game::validateAndAddGuess)
                 call.respondRedirect("/")
             }
         }
