@@ -2,10 +2,16 @@ package io.github.cbaumont
 
 import io.github.cbaumont.view.GameView
 import io.github.cbaumont.view.webView
+import io.github.cbaumont.view.generateHtml
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.html.respondHtml
+import io.ktor.server.response.respond
+import io.ktor.http.content.TextContent
 import io.ktor.server.netty.Netty
+import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receiveParameters
+import io.ktor.http.withCharset
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
@@ -32,6 +38,10 @@ fun main() {
                 proposedWord = "GREENLAND",
                 gameIntro = "Where is Worldo today?"
             )
+            get("/test") {
+              val text = generateHtml(previousGuesses, game)
+              call.respond(TextContent(text, ContentType.Text.Html.withCharset(Charsets.UTF_8), HttpStatusCode.OK))
+            }
             get("/") {
                 call.respondHtml {
                     head {

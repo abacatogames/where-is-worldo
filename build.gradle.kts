@@ -28,7 +28,7 @@ kotlin {
 }
 
 application {
-    mainClass = "io.github.cbaumont.AppKt"
+    mainClass = "io.github.cbaumont.WebAppKt"
 }
 
 tasks.named<JavaExec>("run") {
