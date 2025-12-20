@@ -19,7 +19,6 @@ import kotlinx.html.style
 import kotlinx.html.textInput
 import kotlinx.html.title
 
-
 fun interface WebView : (Game) -> String {
     companion object {
         fun create(): WebView =

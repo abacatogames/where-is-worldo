@@ -82,5 +82,4 @@ class CLIViewTest {
 
         assertContains(CLIView.create()(game), "You’re out of attempts for today — better luck tomorrow!")
     }
-
 }

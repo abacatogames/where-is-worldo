@@ -1,5 +1,5 @@
-import io.github.cbaumont.GameState
 import io.github.cbaumont.Game
+import io.github.cbaumont.GameState
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -77,5 +77,4 @@ class GameTest {
         assertEquals(expected = 2, actual = game.attemptsLeft)
         assertEquals(0, game.validGuesses.size)
     }
-
 }
