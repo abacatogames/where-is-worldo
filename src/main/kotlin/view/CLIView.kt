@@ -1,43 +1,52 @@
 package io.github.cbaumont.view
 
+import io.github.cbaumont.Game
+import io.github.cbaumont.GameState
 import io.github.cbaumont.WordGuess
 import io.github.cbaumont.view.CLIColours.DEFAULT
 import io.github.cbaumont.view.CLIColours.GREEN
 
-private typealias CLIView = GameView
+fun interface CLIView : (Game) -> String {
+    companion object {
+        fun create(): CLIView =
+            object : CLIView {
+                override fun invoke(game: Game): String =
+                    listOfNotNull(
+                        if (!game.lastGuessWasInvalid) gameBoard(game.validGuesses.lastOrNull()) else null,
+                        instructions(game)
+                    ).joinToString("\n")
 
-fun GameView.Companion.CLIView(writer: ConsoleWriter = ConsoleWriter.defaultWriter()): CLIView {
-    return object : GameView {
-        override fun displayGuess(guess: WordGuess): String = guess.matches.map {
-            if (it.value) {
-                guess.value[it.key].green
-            } else guess.value[it.key]
-        }.joinToString(" ")
+                private fun instructions(game: Game): String =
+                    when (game.state) {
+                        GameState.NEW -> "Start by making a guess."
+                        GameState.IN_PROGRESS -> {
+                            if (game.lastGuessWasInvalid) {
+                                "Invalid country, please make another guess."
+                            } else {
+                                "You have ${game.attemptsLeft} attempts left. Make another guess."
+                            }
+                        }
 
-        override fun readInput(): String = writer.read()
+                        GameState.WON -> "Congratulations, you found Worldo!"
+                        GameState.LOST -> "You’re out of attempts for today — better luck tomorrow!"
+                    }
 
-        override fun displayMessage(message: String) = writer.write(message)
+                private fun gameBoard(guess: WordGuess?): String? {
+                    return guess?.matches?.map {
+                        if (it.value) {
+                            guess.value[it.key].green
+                        } else guess.value[it.key]
+                    }?.joinToString(" ")
+                }
+            }
     }
-}
 
-enum class CLIColours(val code: String) {
-    GREEN("\u001b[32m"),
-    DEFAULT("\u001b[0m")
 }
 
 private val Char.green
     get() = "${GREEN.code}$this${DEFAULT.code}"
 
-interface ConsoleWriter {
-    fun read(): String
-    fun write(message: String)
-
-    companion object {
-        fun defaultWriter(): ConsoleWriter = object : ConsoleWriter {
-            override fun read(): String = readln()
-
-            override fun write(message: String) = println(message)
-
-        }
-    }
+enum class CLIColours(val code: String) {
+    GREEN("\u001b[32m"),
+    DEFAULT("\u001b[0m")
 }

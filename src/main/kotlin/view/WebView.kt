@@ -1,7 +1,7 @@
 package io.github.cbaumont.view
 
+import io.github.cbaumont.Game
 import io.github.cbaumont.GameState
-import io.github.cbaumont.WebGame
 import io.github.cbaumont.WordGuess
 import io.github.cbaumont.styles
 import kotlinx.html.FlowContent
@@ -20,11 +20,11 @@ import kotlinx.html.textInput
 import kotlinx.html.title
 
 
-fun interface WebView : (WebGame) -> String {
+fun interface WebView : (Game) -> String {
     companion object {
         fun create(): WebView =
             object : WebView {
-                override fun invoke(game: WebGame): String =
+                override fun invoke(game: Game): String =
                     createHTML().html {
                         titleAndStyle()
                         body {
@@ -65,7 +65,7 @@ fun interface WebView : (WebGame) -> String {
                         }
                     }
 
-                private fun FlowContent.instructionsAndInput(game: WebGame) {
+                private fun FlowContent.instructionsAndInput(game: Game) {
                     return when (game.state) {
                         GameState.WON -> h2("won") { +"Congratulations, you found Worldo!" }
                         GameState.LOST -> h2("lost") { +"You’re out of attempts for today — better luck tomorrow!" }

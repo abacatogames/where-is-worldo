@@ -17,7 +17,7 @@ import io.ktor.server.routing.routing
 fun main() {
     embeddedServer(Netty, port = 8080) {
         routing {
-            val game = WebGame(
+            val game = Game(
                 maxAttempts = 6,
                 proposedWord = "GREENLAND",
             )

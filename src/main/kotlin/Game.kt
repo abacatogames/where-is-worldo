@@ -2,7 +2,7 @@ package io.github.cbaumont
 
 import io.github.cbaumont.WordOfTheDay.LocationOfTheDay
 
-class WebGame(
+class Game(
     val maxAttempts: Int,
     val proposedWord: String,
     val gameId: String = "test-id",

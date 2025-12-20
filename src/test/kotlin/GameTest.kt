@@ -1,17 +1,17 @@
 import io.github.cbaumont.GameState
-import io.github.cbaumont.WebGame
+import io.github.cbaumont.Game
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import org.junit.jupiter.api.assertThrows
 
-class WebGameTest {
+class GameTest {
 
     @Test
     fun `does not start game with invalid location`() {
         val exception = assertThrows<IllegalStateException> {
-            WebGame(
+            Game(
                 maxAttempts = 6,
                 proposedWord = "ENGLAND",
             )
@@ -22,7 +22,7 @@ class WebGameTest {
 
     @Test
     fun `game starts`() {
-        val game = WebGame(
+        val game = Game(
             maxAttempts = 6,
             proposedWord = "GREENLAND",
         )
@@ -35,7 +35,7 @@ class WebGameTest {
 
     @Test
     fun `game won`() {
-        val game = WebGame(
+        val game = Game(
             maxAttempts = 6,
             proposedWord = "GREENLAND",
         )
@@ -50,7 +50,7 @@ class WebGameTest {
 
     @Test
     fun `game lost`() {
-        val game = WebGame(
+        val game = Game(
             maxAttempts = 1,
             proposedWord = "GREENLAND",
         )
@@ -65,7 +65,7 @@ class WebGameTest {
 
     @Test
     fun `invalid guess`() {
-        val game = WebGame(
+        val game = Game(
             maxAttempts = 2,
             proposedWord = "GREENLAND",
         )
