@@ -5,7 +5,7 @@ import io.github.cbaumont.WordOfTheDay.LocationOfTheDay
 class Game(
     val maxAttempts: Int,
     val proposedWord: String,
-    val gameId: String = "test-id",
+    val gameSid: String = "test-id",
 ) {
     private val previousGuesses: MutableList<WordGuess?> = mutableListOf()
     val validGuesses: List<WordGuess>

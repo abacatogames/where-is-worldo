@@ -43,7 +43,7 @@ class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
 
         val result = gameView(game)
 
-        val expected = createHTML().form(action = "/", method = FormMethod.post) {
+        val expected = createHTML().form(action = "/?sid=test-id", method = FormMethod.post) {
             textInput(name = "guess") {
                 placeholder = "TYPE HERE"
                 autoFocus = true

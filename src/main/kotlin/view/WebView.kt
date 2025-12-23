@@ -3,7 +3,9 @@ package io.github.cbaumont.view
 import io.github.cbaumont.Game
 import io.github.cbaumont.GameState
 import io.github.cbaumont.WordGuess
-import io.github.cbaumont.styles
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.html.respondHtml
+import io.ktor.server.routing.RoutingCall
 import kotlinx.html.FlowContent
 import kotlinx.html.FormMethod
 import kotlinx.html.HTML
@@ -42,8 +44,8 @@ fun interface WebView : (Game) -> String {
                         style { +styles.toString() }
                     }
 
-                private fun FlowContent.guessForm() =
-                    form(action = "/", method = FormMethod.post) {
+                private fun FlowContent.guessForm(sid: String) =
+                    form(action = "/?sid=${sid}", method = FormMethod.post) {
                         textInput(name = "guess") {
                             placeholder = "TYPE HERE"
                             autoFocus = true
@@ -70,7 +72,7 @@ fun interface WebView : (Game) -> String {
                         GameState.LOST -> h2("lost") { +"You’re out of attempts for today — better luck tomorrow!" }
                         GameState.NEW -> {
                             h2 { +"Start by making a guess." }
-                            guessForm()
+                            guessForm(game.gameSid)
                         }
 
                         GameState.IN_PROGRESS -> {
@@ -79,10 +81,23 @@ fun interface WebView : (Game) -> String {
                             } else {
                                 h2 { +"You have ${game.attemptsLeft} attempts left. Make another guess." }
                             }
-                            guessForm()
+                            guessForm(game.gameSid)
                         }
                     }
                 }
             }
+    }
+}
+
+suspend fun RoutingCall.gameNotFound(sid: String) {
+    this.respondHtml(HttpStatusCode.NotFound) {
+        head {
+            title { +"Game not found" }
+            style { +styles.toString() }
+        }
+        body {
+            h1 { +"Game not found :(" }
+            h2 { +"Sorry, but the game session with sid: $sid was not found" }
+        }
     }
 }

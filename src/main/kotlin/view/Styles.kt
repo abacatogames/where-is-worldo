@@ -1,4 +1,4 @@
-package io.github.cbaumont
+package io.github.cbaumont.view
 
 import kotlinx.css.Align
 import kotlinx.css.Border
