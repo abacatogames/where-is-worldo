@@ -20,12 +20,11 @@ import io.ktor.server.sessions.cookie
 import io.ktor.server.sessions.get
 import io.ktor.server.sessions.sessions
 import io.ktor.server.sessions.set
-import kotlinx.serialization.Serializable
 import java.time.LocalDate
-import java.util.UUID
+import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameSession(val id: String, val game: Game)
+data class GameSession(val dateRef: Long, val game: Game)
 
 fun main() {
     embeddedServer(Netty, port = 8080) {
@@ -38,17 +37,16 @@ fun main() {
         }
         routing {
             get("/") {
-                val proposedWord = generateWordForDate(LocalDate.now())
-                call.sessions.get<GameSession>() ?: call.sessions.set(
-                    GameSession(
-                        UUID.randomUUID().toString(),
-                        Game(6, proposedWord)
-                    )
-                )
-                val game = call.sessions.get<GameSession>()!!.game
+                val currentDateRef = LocalDate.now().toEpochDay()
+                val session = call.sessions.get<GameSession>()
+
+                if (session == null || currentDateRef > session.dateRef) {
+                    call.sessions.set(GameSession(currentDateRef, Game()))
+                }
+
                 call.respond(
                     TextContent(
-                        WebView.create()(game),
+                        WebView.create()(call.sessions.get<GameSession>()!!.game),
                         ContentType.Text.Html.withCharset(Charsets.UTF_8),
                         HttpStatusCode.OK
                     )

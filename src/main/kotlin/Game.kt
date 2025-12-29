@@ -1,12 +1,13 @@
 package io.github.cbaumont
 
 import io.github.cbaumont.VerifiedWord.VerifiedLocation
+import java.time.LocalDate
 import kotlinx.serialization.Serializable
 
 @Serializable
 class Game(
-    val maxAttempts: Int,
-    val proposedWord: String,
+    val maxAttempts: Int = 6,
+    val proposedWord: String = generateWordForDate(LocalDate.now()),
 ) {
     private val previousGuesses: MutableList<WordGuess?> = mutableListOf()
     val validGuesses: List<WordGuess>
