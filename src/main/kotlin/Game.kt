@@ -1,11 +1,12 @@
 package io.github.cbaumont
 
 import io.github.cbaumont.WordOfTheDay.LocationOfTheDay
+import kotlinx.serialization.Serializable
 
+@Serializable
 class Game(
     val maxAttempts: Int,
     val proposedWord: String,
-    val gameSid: String = "test-id",
 ) {
     private val previousGuesses: MutableList<WordGuess?> = mutableListOf()
     val validGuesses: List<WordGuess>

@@ -1,5 +1,8 @@
 package io.github.cbaumont
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class WordGuess(
     val value: String,
     val correctWord: String
