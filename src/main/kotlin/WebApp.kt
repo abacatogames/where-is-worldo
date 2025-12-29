@@ -21,7 +21,8 @@ import io.ktor.server.sessions.get
 import io.ktor.server.sessions.sessions
 import io.ktor.server.sessions.set
 import kotlinx.serialization.Serializable
-import java.util.*
+import java.time.LocalDate
+import java.util.UUID
 
 @Serializable
 data class GameSession(val id: String, val game: Game)
@@ -37,10 +38,11 @@ fun main() {
         }
         routing {
             get("/") {
+                val proposedWord = generateWordForDate(LocalDate.now())
                 call.sessions.get<GameSession>() ?: call.sessions.set(
                     GameSession(
                         UUID.randomUUID().toString(),
-                        Game(6, "BRAZIL")
+                        Game(6, proposedWord)
                     )
                 )
                 val game = call.sessions.get<GameSession>()!!.game

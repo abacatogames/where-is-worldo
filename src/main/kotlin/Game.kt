@@ -1,6 +1,6 @@
 package io.github.cbaumont
 
-import io.github.cbaumont.WordOfTheDay.LocationOfTheDay
+import io.github.cbaumont.VerifiedWord.VerifiedLocation
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,7 +11,7 @@ class Game(
     private val previousGuesses: MutableList<WordGuess?> = mutableListOf()
     val validGuesses: List<WordGuess>
         get() = previousGuesses.filterNotNull()
-    val wordOfTheDay: WordOfTheDay = WordOfTheDay.of(proposedWord, String::isAValidCountry, ::LocationOfTheDay)
+    val verifiedWord: VerifiedWord = VerifiedWord.of(proposedWord, String::isAValidCountry, ::VerifiedLocation)
     val attemptsLeft: Int
         get() = maxAttempts - validGuesses.size
     val state: GameState
@@ -28,7 +28,7 @@ class Game(
 
     fun validateAndAddGuess(guess: String) {
         guess.takeIf(String::isAValidCountry)
-            ?.let { WordGuess(it, wordOfTheDay.value) }
+            ?.let { WordGuess(it, verifiedWord.value) }
             .let { previousGuesses.add(it) }
     }
 }
