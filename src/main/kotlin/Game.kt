@@ -1,14 +1,11 @@
 package io.github.cbaumont
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 class Game(
     val maxAttempts: Int = 6,
     val proposedWord: String,
-    val validator: (String) -> Boolean = String::isAValidCountry,
+    val validator: (String) -> Boolean,
+    val previousGuesses: MutableList<WordGuess?> = mutableListOf()
 ) {
-    private val previousGuesses: MutableList<WordGuess?> = mutableListOf()
     private val verifiedWord: VerifiedWord =
         VerifiedWord.of(proposedWord, validator) ?: error("Unable to start the game with word: $proposedWord")
     val validGuesses: List<WordGuess>
@@ -30,7 +27,10 @@ class Game(
     fun validateAndAddGuess(guess: String) {
         VerifiedWord.of(guess, validator)?.value
             ?.let { WordGuess(it, verifiedWord.value) }
-            .let { previousGuesses.add(it) }
+            .let { wordGuess ->
+                previousGuesses.removeAll { it == null }
+                previousGuesses.add(wordGuess)
+            }
     }
 }
 

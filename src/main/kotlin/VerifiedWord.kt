@@ -1,9 +1,6 @@
 package io.github.cbaumont
 
-import kotlinx.serialization.Serializable
-
 @JvmInline
-@Serializable
 value class VerifiedWord internal constructor(val value: String) {
 
     companion object {

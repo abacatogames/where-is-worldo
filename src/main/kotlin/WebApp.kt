@@ -24,7 +24,7 @@ import java.time.LocalDate
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameSession(val dateRef: Long, val game: Game)
+data class GameSession(val dateRef: Long, val guesses: MutableList<WordGuess?>)
 
 fun main() {
     embeddedServer(Netty, port = 8080) {
@@ -41,17 +41,18 @@ fun main() {
                 val session = call.sessions.get<GameSession>()
 
                 if (session == null || currentDateRef > session.dateRef) {
-                    call.sessions.set(
-                        GameSession(
-                            dateRef = currentDateRef,
-                            game = Game(proposedWord = generateWordForDate(LocalDate.now()))
-                        )
-                    )
+                    call.sessions.set(GameSession(dateRef = currentDateRef, guesses = mutableListOf()))
                 }
+
+                val game = Game(
+                    proposedWord = generateWordForDate(LocalDate.now()),
+                    validator = String::isAValidCountry,
+                    previousGuesses = call.sessions.get<GameSession>()!!.guesses
+                )
 
                 call.respond(
                     TextContent(
-                        WebView.create()(call.sessions.get<GameSession>()!!.game),
+                        WebView.create()(game),
                         ContentType.Text.Html.withCharset(Charsets.UTF_8),
                         HttpStatusCode.OK
                     )
@@ -60,10 +61,17 @@ fun main() {
             post("/") {
                 runCatching {
                     val session = call.sessions.get<GameSession>() ?: error("Game not found")
+
+                    val game = Game(
+                        proposedWord = generateWordForDate(LocalDate.now()),
+                        validator = String::isAValidCountry,
+                        previousGuesses = session.guesses
+                    )
+
                     call.receiveParameters()["guess"]
                         ?.trim()
                         ?.takeIf(String::isNotBlank)
-                        ?.let(session.game::validateAndAddGuess)
+                        ?.let(game::validateAndAddGuess)
 
                     call.sessions.set<GameSession>(session)
                     call.respondRedirect("/")

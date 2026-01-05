@@ -1,4 +1,5 @@
 import io.github.cbaumont.Game
+import io.github.cbaumont.isAValidCountry
 import kotlin.test.Test
 import kotlin.test.assertContains
 
@@ -8,6 +9,7 @@ abstract class GameViewContractTest(val gameView: (Game) -> String) {
         val game = Game(
             maxAttempts = 3,
             proposedWord = "GREENLAND",
+            validator = { _ -> true }
         )
 
         assertContains(gameView(game), "Start by making a guess.")
@@ -18,6 +20,7 @@ abstract class GameViewContractTest(val gameView: (Game) -> String) {
         val game = Game(
             maxAttempts = 3,
             proposedWord = "GREENLAND",
+            validator = { _ -> true }
         )
 
         game.validateAndAddGuess("GUYANA")
@@ -30,6 +33,7 @@ abstract class GameViewContractTest(val gameView: (Game) -> String) {
         val game = Game(
             maxAttempts = 3,
             proposedWord = "GREENLAND",
+            validator = String::isAValidCountry
         )
 
         game.validateAndAddGuess("GUESS")
@@ -42,6 +46,7 @@ abstract class GameViewContractTest(val gameView: (Game) -> String) {
         val game = Game(
             maxAttempts = 3,
             proposedWord = "GREENLAND",
+            validator = { _ -> true }
         )
 
         game.validateAndAddGuess("GREENLAND")
@@ -54,6 +59,7 @@ abstract class GameViewContractTest(val gameView: (Game) -> String) {
         val game = Game(
             maxAttempts = 1,
             proposedWord = "GREENLAND",
+            validator = { _ -> true }
         )
 
         game.validateAndAddGuess("GUYANA")

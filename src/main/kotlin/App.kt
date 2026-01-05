@@ -3,7 +3,11 @@ package io.github.cbaumont
 import io.github.cbaumont.view.CLIView
 
 fun main() {
-    val game = Game(6, "GREENLAND")
+    val game = Game(
+        maxAttempts = 6,
+        proposedWord = "GREENLAND",
+        validator = String::isAValidCountry
+    )
 
     println(CLIView.create()(game))
     while (game.state != GameState.WON && game.state != GameState.LOST) {

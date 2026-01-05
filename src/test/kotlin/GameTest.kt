@@ -1,5 +1,6 @@
 import io.github.cbaumont.Game
 import io.github.cbaumont.GameState
+import io.github.cbaumont.isAValidCountry
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -15,6 +16,7 @@ class GameTest {
             Game(
                 maxAttempts = 6,
                 proposedWord = "ENGLAND",
+                validator = String::isAValidCountry
             )
         }
 
@@ -26,6 +28,7 @@ class GameTest {
         val game = Game(
             maxAttempts = 6,
             proposedWord = "GREENLAND",
+            validator = { _ -> true }
         )
 
         assertEquals(expected = GameState.NEW, actual = game.state)
@@ -39,6 +42,7 @@ class GameTest {
         val game = Game(
             maxAttempts = 6,
             proposedWord = "GREENLAND",
+            validator = { _ -> true }
         )
 
         game.validateAndAddGuess("GREENLAND")
@@ -54,6 +58,7 @@ class GameTest {
         val game = Game(
             maxAttempts = 1,
             proposedWord = "GREENLAND",
+            validator = { _ -> true }
         )
 
         game.validateAndAddGuess("BRAZIL")
@@ -69,6 +74,7 @@ class GameTest {
         val game = Game(
             maxAttempts = 2,
             proposedWord = "GREENLAND",
+            validator = String::isAValidCountry
         )
 
         game.validateAndAddGuess("ENGLAND")

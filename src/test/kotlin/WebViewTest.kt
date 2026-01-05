@@ -16,6 +16,7 @@ class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
         val game = Game(
             maxAttempts = 3,
             proposedWord = "GREENLAND",
+            validator = { true }
         )
 
         game.validateAndAddGuess("GUYANA")
@@ -39,6 +40,7 @@ class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
         val game = Game(
             maxAttempts = 3,
             proposedWord = "GREENLAND",
+            validator = { true }
         )
 
         val result = gameView(game)
