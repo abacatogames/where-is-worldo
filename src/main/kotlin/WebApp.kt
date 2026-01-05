@@ -41,7 +41,12 @@ fun main() {
                 val session = call.sessions.get<GameSession>()
 
                 if (session == null || currentDateRef > session.dateRef) {
-                    call.sessions.set(GameSession(currentDateRef, Game()))
+                    call.sessions.set(
+                        GameSession(
+                            dateRef = currentDateRef,
+                            game = Game(proposedWord = generateWordForDate(LocalDate.now()))
+                        )
+                    )
                 }
 
                 call.respond(

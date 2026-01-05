@@ -1,6 +1,7 @@
 import io.github.cbaumont.Game
 import io.github.cbaumont.GameState
 import kotlin.test.Test
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -17,7 +18,7 @@ class GameTest {
             )
         }
 
-        assertEquals(expected = "Unable to start the game with word: ENGLAND", actual = exception.message)
+        assertContains(exception.message!!, "ENGLAND")
     }
 
     @Test

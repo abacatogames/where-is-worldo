@@ -1,17 +1,15 @@
 package io.github.cbaumont
 
-sealed interface VerifiedWord {
-    val value: String
+import kotlinx.serialization.Serializable
 
-    @JvmInline
-    value class VerifiedLocation internal constructor(override val value: String) : VerifiedWord
+@JvmInline
+@Serializable
+value class VerifiedWord internal constructor(val value: String) {
 
     companion object {
-        fun of(
-            rawValue: String?,
-            validation: (String) -> Boolean,
-            constructor: (String) -> VerifiedWord
-        ): VerifiedWord = rawValue?.takeIf { validation(it) }?.let { constructor(it) }
-            ?: error("Unable to start the game with word: $rawValue")
+        fun of(rawValue: String?, validation: (String) -> Boolean): VerifiedWord? =
+            rawValue
+                ?.takeIf { validation(it) }
+                ?.let { VerifiedWord(it) }
     }
 }

@@ -1,18 +1,18 @@
 package io.github.cbaumont
 
-import io.github.cbaumont.VerifiedWord.VerifiedLocation
-import java.time.LocalDate
 import kotlinx.serialization.Serializable
 
 @Serializable
 class Game(
     val maxAttempts: Int = 6,
-    val proposedWord: String = generateWordForDate(LocalDate.now()),
+    val proposedWord: String,
+    val validator: (String) -> Boolean = String::isAValidCountry,
 ) {
     private val previousGuesses: MutableList<WordGuess?> = mutableListOf()
+    private val verifiedWord: VerifiedWord =
+        VerifiedWord.of(proposedWord, validator) ?: error("Unable to start the game with word: $proposedWord")
     val validGuesses: List<WordGuess>
         get() = previousGuesses.filterNotNull()
-    val verifiedWord: VerifiedWord = VerifiedWord.of(proposedWord, String::isAValidCountry, ::VerifiedLocation)
     val attemptsLeft: Int
         get() = maxAttempts - validGuesses.size
     val state: GameState
@@ -28,7 +28,7 @@ class Game(
         get() = previousGuesses.isNotEmpty() && previousGuesses.lastOrNull() == null
 
     fun validateAndAddGuess(guess: String) {
-        guess.takeIf(String::isAValidCountry)
+        VerifiedWord.of(guess, validator)?.value
             ?.let { WordGuess(it, verifiedWord.value) }
             .let { previousGuesses.add(it) }
     }
