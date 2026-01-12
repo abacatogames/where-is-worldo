@@ -26,7 +26,7 @@ import java.time.LocalDate
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameSession(val dateRef: Long, val guesses: MutableList<WordGuess?>)
+data class GameSession(val dateRef: Long, val guesses: List<WordGuess?>)
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
@@ -50,13 +50,13 @@ fun Application.module() {
             val session = call.sessions.get<GameSession>()
 
             if (session == null || currentDateRef > session.dateRef) {
-                call.sessions.set(GameSession(dateRef = currentDateRef, guesses = mutableListOf()))
+                call.sessions.set(GameSession(dateRef = currentDateRef, guesses = listOf()))
             }
 
             val game = Game(
                 proposedWord = generateWordForDate(LocalDate.now()),
                 validator = String::isAValidCountry,
-                previousGuesses = call.sessions.get<GameSession>()!!.guesses
+                guesses = call.sessions.get<GameSession>()!!.guesses
             )
 
             call.respond(
@@ -74,7 +74,7 @@ fun Application.module() {
                 val game = Game(
                     proposedWord = generateWordForDate(LocalDate.now()),
                     validator = String::isAValidCountry,
-                    previousGuesses = session.guesses
+                    guesses = session.guesses
                 )
 
                 call.receiveParameters()["guess"]
@@ -82,7 +82,7 @@ fun Application.module() {
                     ?.takeIf(String::isNotBlank)
                     ?.let(game::validateAndAddGuess)
 
-                call.sessions.set<GameSession>(session)
+                call.sessions.set<GameSession>(session.copy(guesses = game.allGuesses))
                 call.respondRedirect("/")
             }.onFailure { call.gameNotFound() }
         }
