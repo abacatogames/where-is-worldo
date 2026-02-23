@@ -1,5 +1,6 @@
 package io.github.cbaumont
 
+import io.github.cbaumont.geo.isAValidCountry
 import io.github.cbaumont.view.CLIView
 
 fun main() {

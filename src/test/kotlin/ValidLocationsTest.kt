@@ -1,4 +1,4 @@
-import io.github.cbaumont.isAValidCountry
+import io.github.cbaumont.geo.isAValidCountry
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

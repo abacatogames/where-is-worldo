@@ -1,4 +1,4 @@
-package io.github.cbaumont
+package io.github.cbaumont.view
 
 val worldo =
     """

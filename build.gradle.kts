@@ -22,6 +22,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-html-builder")
     implementation("io.ktor:ktor-server-sessions")
+    implementation("net.sf.geographiclib:GeographicLib-Java:2.1")
 }
 
 tasks.test {
