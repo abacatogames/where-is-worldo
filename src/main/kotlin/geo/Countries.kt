@@ -19,4 +19,11 @@ data class Country(
     override val name: String,
     override val latitude: Double,
     override val longitude: Double
-) : GeoLocation
+) : GeoLocation {
+    companion object {
+        fun of(name: String): Country =
+            CountriesTable.find {
+                it.name.equals(name, ignoreCase = true)
+            } ?: error("Invalid country name.")
+    }
+}

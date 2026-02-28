@@ -3,12 +3,16 @@ package io.github.cbaumont.view
 import io.github.cbaumont.Game
 import io.github.cbaumont.GameState
 import io.github.cbaumont.WordGuess
+import io.github.cbaumont.geo.CardinalDirection
+import io.github.cbaumont.geo.Country
+import io.github.cbaumont.geo.GeoDistance
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.html.respondHtml
 import io.ktor.server.routing.RoutingCall
 import kotlinx.html.FlowContent
 import kotlinx.html.FormMethod
 import kotlinx.html.body
+import kotlinx.html.br
 import kotlinx.html.div
 import kotlinx.html.form
 import kotlinx.html.h1
@@ -22,7 +26,7 @@ import kotlinx.html.title
 
 fun interface WebView : (Game) -> String {
     companion object {
-        fun create(): WebView =
+        fun create(geoDistance: GeoDistance = GeoDistance.create()): WebView =
             object : WebView {
                 override fun invoke(game: Game): String =
                     createHTML().html {
@@ -52,11 +56,20 @@ fun interface WebView : (Game) -> String {
                     div("board") {
                         for (guess in validGuesses) {
                             div("row") {
-                                guess.matches.map {
+                                guess.matches.forEach {
                                     val cls = if (it.value) "correct" else "absent"
                                     div("tile $cls") {
                                         +guess.value[it.key].toString()
                                     }
+                                }
+                                div("tile hint") {
+                                    val distance = geoDistance(
+                                        Country.of(guess.value),
+                                        Country.of(guess.correctWord)
+                                    )
+                                    +distance.direction.toArrow()
+                                    br
+                                    +"${distance.km} KM"
                                 }
                             }
                         }
@@ -84,6 +97,18 @@ fun interface WebView : (Game) -> String {
             }
     }
 }
+
+private fun CardinalDirection.toArrow(): String =
+    when (this) {
+        CardinalDirection.SOUTH -> "⬇️"
+        CardinalDirection.WEST -> "⬅️"
+        CardinalDirection.NORTH -> "⬆️"
+        CardinalDirection.EAST -> "➡️"
+        CardinalDirection.SOUTH_WEST -> "↙️"
+        CardinalDirection.SOUTH_EAST -> "↘️"
+        CardinalDirection.NORTH_WEST -> "↖️"
+        CardinalDirection.NORTH_EAST -> "↗️"
+    }
 
 suspend fun RoutingCall.gameNotFound() =
     respondHtml(HttpStatusCode.NotFound) {

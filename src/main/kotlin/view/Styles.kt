@@ -127,6 +127,10 @@ val styles = CssBuilder().apply {
         backgroundColor = Color("#3a3a3c")
         color = Color.white
     }
+    rule(".tile.hint") {
+        backgroundColor = Color("#b59f3b")
+        fontSize = 14.px
+    }
     rule(".tile.correct") {
         backgroundColor = Color("#538d4e")
     }
