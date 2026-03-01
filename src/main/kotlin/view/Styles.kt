@@ -15,6 +15,10 @@ import kotlinx.css.Padding
 import kotlinx.css.TextAlign
 import kotlinx.css.TextTransform
 import kotlinx.css.alignItems
+import kotlinx.css.animationDuration
+import kotlinx.css.animationIterationCount
+import kotlinx.css.animationName
+import kotlinx.css.animationTimingFunction
 import kotlinx.css.backgroundColor
 import kotlinx.css.border
 import kotlinx.css.borderRadius
@@ -31,6 +35,7 @@ import kotlinx.css.h1
 import kotlinx.css.h2
 import kotlinx.css.height
 import kotlinx.css.justifyContent
+import kotlinx.css.keyframes
 import kotlinx.css.letterSpacing
 import kotlinx.css.margin
 import kotlinx.css.marginBottom
@@ -39,6 +44,8 @@ import kotlinx.css.overflowX
 import kotlinx.css.padding
 import kotlinx.css.paddingBottom
 import kotlinx.css.pct
+import kotlinx.css.properties.Timing
+import kotlinx.css.properties.s
 import kotlinx.css.px
 import kotlinx.css.textAlign
 import kotlinx.css.textTransform
@@ -82,7 +89,10 @@ val styles = CssBuilder().apply {
         color = Color.cafeNoir
     }
     rule(".won") {
-        color = Color.correctGuess
+        color = Color.darkOliveGreen
+    }
+    rule(".lost") {
+        color = Color.darkRed
     }
     rule(".invalid") {
         color = Color.darkRed
@@ -151,6 +161,23 @@ val styles = CssBuilder().apply {
     }
     rule(".tile.absent") {
         backgroundColor = Color.cafeNoir
+    }
+    keyframes("color-animation") {
+        0 { color = Color.blackBean }
+        20  { color = Color.darkRed }
+        40  { color = Color.cafeNoir }
+        60  { color = Color.darkOliveGreen }
+        80  { color = Color.darkBlue }
+        100 { color = Color.blackBean }
+    }
+    rule(".color-gif") {
+        color = Color.blackBean
+        fontWeight = FontWeight.bold
+        fontSize = 24.px
+        animationDuration = 3.5.s
+        animationTimingFunction = Timing.linear
+        animationIterationCount = Int.MAX_VALUE
+        animationName = "color-animation"
     }
 }
 

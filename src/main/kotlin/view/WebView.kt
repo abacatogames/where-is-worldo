@@ -46,12 +46,10 @@ fun interface WebView : (Game) -> String {
 
                 private fun FlowContent.guessForm(hidden: Boolean = false) =
                     div("form-slot") {
-                        if (!hidden) {
-                            form(action = "/", method = FormMethod.post) {
-                                textInput(name = "guess") {
-                                    placeholder = "TYPE HERE"
-                                    autoFocus = true
-                                }
+                        form(action = "/", method = FormMethod.post) {
+                            textInput(name = "guess") {
+                                placeholder = "TYPE HERE"
+                                autoFocus = true
                             }
                         }
                     }
@@ -72,21 +70,20 @@ fun interface WebView : (Game) -> String {
                     }
 
                 private fun FlowContent.instructionsAndInput(game: Game) {
-                    var hideInput: Boolean
                     when (game.state) {
                         GameState.WON -> {
                             h2("won") { +"Congratulations, you found Worldo!" }
-                            hideInput = true
+                            div("form-slot color-gif") { +"YOU WON!" }
                         }
 
                         GameState.LOST -> {
                             h2("lost") { +"You’re out of attempts for today — better luck tomorrow!" }
-                            hideInput = true
+                            div("form-slot color-gif") { +"GAME OVER" }
                         }
 
                         GameState.NEW -> {
                             h2 { +"Start by making a guess." }
-                            hideInput = false
+                            guessForm()
                         }
 
                         GameState.IN_PROGRESS -> {
@@ -95,10 +92,9 @@ fun interface WebView : (Game) -> String {
                             } else {
                                 h2 { +"You have ${game.attemptsLeft} attempts left. Make another guess." }
                             }
-                            hideInput = false
+                            guessForm()
                         }
                     }
-                    guessForm(hideInput)
                 }
 
                 private fun FlowContent.distanceHint(guess: WordGuess) {
