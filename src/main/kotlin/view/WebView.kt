@@ -44,17 +44,18 @@ fun interface WebView : (Game) -> String {
                         }
                     }
 
-                private fun FlowContent.guessForm() =
+                private fun FlowContent.guessForm(hidden: Boolean = false) =
                     form(action = "/", method = FormMethod.post) {
                         textInput(name = "guess") {
                             placeholder = "TYPE HERE"
                             autoFocus = true
+                            disabled = hidden
                         }
                     }
 
                 private fun FlowContent.gameBoard(validGuesses: List<WordGuess>) =
                     div("board") {
-                        for (guess in validGuesses) {
+                        for (guess in validGuesses.reversed()) {
                             div("row") {
                                 guess.matches.forEach {
                                     val cls = if (it.value) "correct" else "absent"
@@ -62,25 +63,23 @@ fun interface WebView : (Game) -> String {
                                         +guess.value[it.key].toString()
                                     }
                                 }
-                                if (!guess.fullMatch) {
-                                    div("tile hint") {
-                                        val distance = geoDistance(
-                                            Country.of(guess.value),
-                                            Country.of(guess.correctWord)
-                                        )
-                                        +distance.direction.toArrow()
-                                        br
-                                        +"${distance.km} KM"
-                                    }
-                                }
+                                if (!guess.fullMatch) distanceHint(guess)
                             }
                         }
                     }
 
                 private fun FlowContent.instructionsAndInput(game: Game) {
                     return when (game.state) {
-                        GameState.WON -> h2("won") { +"Congratulations, you found Worldo!" }
-                        GameState.LOST -> h2("lost") { +"You’re out of attempts for today — better luck tomorrow!" }
+                        GameState.WON -> h2("won") {
+                            +"Congratulations, you found Worldo!"
+                            repeat(4) { br }
+                        }
+
+                        GameState.LOST -> h2("lost") {
+                            +"You’re out of attempts for today — better luck tomorrow!"
+                            repeat(4) { br }
+                        }
+
                         GameState.NEW -> {
                             h2 { +"Start by making a guess." }
                             guessForm()
@@ -94,6 +93,18 @@ fun interface WebView : (Game) -> String {
                             }
                             guessForm()
                         }
+                    }
+                }
+
+                private fun FlowContent.distanceHint(guess: WordGuess) {
+                    div("tile hint") {
+                        val distance = geoDistance(
+                            Country.of(guess.value),
+                            Country.of(guess.correctWord)
+                        )
+                        +distance.direction.toArrow()
+                        br
+                        +"${distance.km} KM"
                     }
                 }
             }
