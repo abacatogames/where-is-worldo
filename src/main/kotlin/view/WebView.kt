@@ -62,14 +62,16 @@ fun interface WebView : (Game) -> String {
                                         +guess.value[it.key].toString()
                                     }
                                 }
-                                div("tile hint") {
-                                    val distance = geoDistance(
-                                        Country.of(guess.value),
-                                        Country.of(guess.correctWord)
-                                    )
-                                    +distance.direction.toArrow()
-                                    br
-                                    +"${distance.km} KM"
+                                if (!guess.fullMatch) {
+                                    div("tile hint") {
+                                        val distance = geoDistance(
+                                            Country.of(guess.value),
+                                            Country.of(guess.correctWord)
+                                        )
+                                        +distance.direction.toArrow()
+                                        br
+                                        +"${distance.km} KM"
+                                    }
                                 }
                             }
                         }

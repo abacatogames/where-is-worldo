@@ -57,33 +57,34 @@ val styles = CssBuilder().apply {
         flexDirection = FlexDirection.column
         justifyContent = JustifyContent.flexStart
         alignItems = Align.center
-        backgroundColor = Color("#121213")
+        backgroundColor = Color("#c19a6b")
         color = Color("#d7dadc")
-        fontFamily = "Inter, sans-serif"
+        fontFamily = "monospace"
         padding = Padding(32.px)
     }
     rule(".container") {
-        maxWidth = 700.px
+        maxWidth = 800.px
         width = 100.pct
         margin = Margin(0.px)
         textAlign = TextAlign.center
     }
     h1 {
-        fontSize = 2.em
+        fontSize = 3.em
         fontWeight = FontWeight.bold
         marginBottom = 16.px
+        color = Color("#3d0c02")
     }
     h2 {
-        fontSize = 1.em
+        fontSize = 1.6.em
         fontWeight = FontWeight.bold
         marginBottom = 24.px
-        color = Color("#818384")
+        color = Color.cafe
     }
     rule(".won") {
         color = Color("#538d4e")
     }
     rule(".invalid") {
-        color = Color("#b59f3b")
+        color = Color.darkRed
     }
     rule("form") {
         display = Display.flex
@@ -100,7 +101,7 @@ val styles = CssBuilder().apply {
         borderRadius = 8.px
         width = 200.px
         border = Border(2.px, BorderStyle.solid, Color("#3a3a3c"))
-        backgroundColor = Color("#0b0b0c")
+        backgroundColor = Color.cafe
         color = Color("#d7dadc")
         textAlign = TextAlign.center
     }
@@ -109,6 +110,7 @@ val styles = CssBuilder().apply {
         flexDirection = FlexDirection.column
         gap = 8.px
         alignItems = Align.center
+        width = 800.px
     }
     rule(".row") {
         display = Display.flex
@@ -124,11 +126,11 @@ val styles = CssBuilder().apply {
         fontWeight = FontWeight.bold
         fontSize = 20.px
         borderRadius = 6.px
-        backgroundColor = Color("#3a3a3c")
+        backgroundColor = Color.cafe
         color = Color.white
     }
     rule(".tile.hint") {
-        backgroundColor = Color("#b59f3b")
+        backgroundColor = Color("#e3a857")
         fontSize = 14.px
     }
     rule(".tile.correct") {
@@ -138,6 +140,9 @@ val styles = CssBuilder().apply {
         backgroundColor = Color("#b59f3b")
     }
     rule(".tile.absent") {
-        backgroundColor = Color("#3a3a3c")
+        backgroundColor = Color.cafe
     }
 }
+
+private val Color.Companion.cafe: Color
+    get() = Color("#4b3621")
