@@ -10,8 +10,10 @@ import kotlinx.css.FlexDirection
 import kotlinx.css.FontWeight
 import kotlinx.css.JustifyContent
 import kotlinx.css.Margin
+import kotlinx.css.Overflow
 import kotlinx.css.Padding
 import kotlinx.css.TextAlign
+import kotlinx.css.TextTransform
 import kotlinx.css.alignItems
 import kotlinx.css.backgroundColor
 import kotlinx.css.border
@@ -33,17 +35,18 @@ import kotlinx.css.letterSpacing
 import kotlinx.css.margin
 import kotlinx.css.marginBottom
 import kotlinx.css.maxWidth
+import kotlinx.css.overflowX
 import kotlinx.css.padding
 import kotlinx.css.pct
 import kotlinx.css.px
 import kotlinx.css.textAlign
+import kotlinx.css.textTransform
+import kotlinx.css.vw
 import kotlinx.css.width
 
 val styles = CssBuilder().apply {
     root {
-        backgroundColor = Color("#121213")
-        color = Color("#d7dadc")
-        fontFamily = "Inter, sans-serif"
+        backgroundColor = Color.bgBrown
         margin = Margin(0.px)
         padding = Padding(0.px)
     }
@@ -55,10 +58,7 @@ val styles = CssBuilder().apply {
     rule("body") {
         display = Display.flex
         flexDirection = FlexDirection.column
-        justifyContent = JustifyContent.flexStart
         alignItems = Align.center
-        backgroundColor = Color("#c19a6b")
-        color = Color("#d7dadc")
         fontFamily = "monospace"
         padding = Padding(32.px)
     }
@@ -72,16 +72,16 @@ val styles = CssBuilder().apply {
         fontSize = 3.em
         fontWeight = FontWeight.bold
         marginBottom = 16.px
-        color = Color("#3d0c02")
+        color = Color.blackBean
     }
     h2 {
         fontSize = 1.6.em
         fontWeight = FontWeight.bold
         marginBottom = 24.px
-        color = Color.cafe
+        color = Color.cafeNoir
     }
     rule(".won") {
-        color = Color("#538d4e")
+        color = Color.correctGuess
     }
     rule(".invalid") {
         color = Color.darkRed
@@ -101,20 +101,24 @@ val styles = CssBuilder().apply {
         borderRadius = 8.px
         width = 200.px
         border = Border(2.px, BorderStyle.solid, Color("#3a3a3c"))
-        backgroundColor = Color.cafe
+        backgroundColor = Color.cafeNoir
         color = Color("#d7dadc")
         textAlign = TextAlign.center
+        textTransform = TextTransform.uppercase
     }
     rule(".board") {
         display = Display.flex
         flexDirection = FlexDirection.column
-        gap = 8.px
-        alignItems = Align.center
-        width = 800.px
+        gap = 1.vw
+        width = 100.pct
+        maxWidth = 800.px
+        overflowX = Overflow.auto
     }
     rule(".row") {
         display = Display.flex
-        gap = 8.px
+        gap = 0.4.vw
+        width = 100.pct
+        justifyContent = JustifyContent.center
         alignItems = Align.center
     }
     rule(".tile") {
@@ -122,27 +126,40 @@ val styles = CssBuilder().apply {
         justifyContent = JustifyContent.center
         alignItems = Align.center
         width = 48.px
-        height = 58.px
+        height = 52.px
         fontWeight = FontWeight.bold
-        fontSize = 20.px
-        borderRadius = 6.px
-        backgroundColor = Color.cafe
+        fontSize = clamp(12.px, 2.2.vw, 22.px)
+        borderRadius = 0.5.vw
+        backgroundColor = Color.cafeNoir
         color = Color.white
+        textTransform = TextTransform.uppercase
     }
     rule(".tile.hint") {
-        backgroundColor = Color("#e3a857")
-        fontSize = 14.px
+        backgroundColor = Color.indianYellow
+        fontSize = clamp(12.px, 2.2.vw, 14.px)
     }
     rule(".tile.correct") {
-        backgroundColor = Color("#538d4e")
+        backgroundColor = Color.correctGuess
     }
     rule(".tile.present") {
         backgroundColor = Color("#b59f3b")
     }
     rule(".tile.absent") {
-        backgroundColor = Color.cafe
+        backgroundColor = Color.cafeNoir
     }
 }
 
-private val Color.Companion.cafe: Color
+private val Color.Companion.cafeNoir: Color
     get() = Color("#4b3621")
+
+private val Color.Companion.correctGuess: Color
+    get() = Color("#538d4e")
+
+private val Color.Companion.blackBean: Color
+    get() = Color("#3d0c02")
+
+private val Color.Companion.indianYellow: Color
+    get() = Color("#e3a857")
+
+private val Color.Companion.bgBrown: Color
+    get() = Color("#c19a6b")
