@@ -1,13 +1,14 @@
 import io.github.cbaumont.Game
 import io.github.cbaumont.view.WebView
+import kotlin.test.Test
+import kotlin.test.assertContains
 import kotlinx.html.FormMethod
+import kotlinx.html.br
 import kotlinx.html.div
 import kotlinx.html.form
 import kotlinx.html.stream.createHTML
 import kotlinx.html.textInput
 import org.junit.jupiter.api.Assertions.assertTrue
-import kotlin.test.Test
-import kotlin.test.assertContains
 
 class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
 
@@ -30,7 +31,12 @@ class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
                 createHTML().div("tile absent") { +"Y" },
                 createHTML().div("tile correct") { +"A" },
                 createHTML().div("tile correct") { +"N" },
-                createHTML().div("tile absent") { +"A" }
+                createHTML().div("tile absent") { +"A" },
+                createHTML().div("tile hint") {
+                    +"↗️"
+                    br
+                    +"7510 KM"
+                }
             )
         assertTrue(expected.all { result.contains(it) })
     }

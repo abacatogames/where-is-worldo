@@ -37,6 +37,7 @@ import kotlinx.css.marginBottom
 import kotlinx.css.maxWidth
 import kotlinx.css.overflowX
 import kotlinx.css.padding
+import kotlinx.css.paddingBottom
 import kotlinx.css.pct
 import kotlinx.css.px
 import kotlinx.css.textAlign
@@ -90,6 +91,10 @@ val styles = CssBuilder().apply {
         display = Display.flex
         gap = 8.px
         marginBottom = 24.px
+    }
+    rule(".form-slot") {
+        height = 48.px
+        paddingBottom = 10.5.px
     }
     rule("input[type=text]") {
         flexGrow = 1.0
