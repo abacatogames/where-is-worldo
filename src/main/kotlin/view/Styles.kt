@@ -10,7 +10,6 @@ import kotlinx.css.FlexDirection
 import kotlinx.css.FontWeight
 import kotlinx.css.JustifyContent
 import kotlinx.css.Margin
-import kotlinx.css.Overflow
 import kotlinx.css.Padding
 import kotlinx.css.TextAlign
 import kotlinx.css.TextTransform
@@ -40,7 +39,6 @@ import kotlinx.css.letterSpacing
 import kotlinx.css.margin
 import kotlinx.css.marginBottom
 import kotlinx.css.maxWidth
-import kotlinx.css.overflowX
 import kotlinx.css.padding
 import kotlinx.css.paddingBottom
 import kotlinx.css.pct
@@ -71,7 +69,7 @@ val styles = CssBuilder().apply {
         padding = Padding(32.px)
     }
     rule(".container") {
-        maxWidth = 800.px
+        maxWidth = 1280.px
         width = 100.pct
         margin = Margin(0.px)
         textAlign = TextAlign.center
@@ -104,7 +102,7 @@ val styles = CssBuilder().apply {
     }
     rule(".form-slot") {
         height = 48.px
-        paddingBottom = 10.5.px
+        paddingBottom = 13.px
     }
     rule("input[type=text]") {
         flexGrow = 1.0
@@ -115,7 +113,7 @@ val styles = CssBuilder().apply {
         letterSpacing = 8.px
         borderRadius = 8.px
         width = 200.px
-        border = Border(2.px, BorderStyle.solid, Color("#3a3a3c"))
+        border = Border(2.px, BorderStyle.solid, Color.darkSlateBlue)
         backgroundColor = Color.cafeNoir
         color = Color("#d7dadc")
         textAlign = TextAlign.center
@@ -124,14 +122,13 @@ val styles = CssBuilder().apply {
     rule(".board") {
         display = Display.flex
         flexDirection = FlexDirection.column
-        gap = 1.vw
+        gap = 0.3.vw
         width = 100.pct
-        maxWidth = 800.px
-        overflowX = Overflow.auto
+        maxWidth = 1280.px
     }
     rule(".row") {
         display = Display.flex
-        gap = 0.4.vw
+        gap = 0.3.vw
         width = 100.pct
         justifyContent = JustifyContent.center
         alignItems = Align.center
@@ -144,7 +141,7 @@ val styles = CssBuilder().apply {
         height = 52.px
         fontWeight = FontWeight.bold
         fontSize = clamp(12.px, 2.2.vw, 22.px)
-        borderRadius = 0.5.vw
+        borderRadius = clamp(6.px, 0.5.vw, 8.px)
         backgroundColor = Color.cafeNoir
         color = Color.white
         textTransform = TextTransform.uppercase
@@ -167,7 +164,7 @@ val styles = CssBuilder().apply {
         20  { color = Color.darkRed }
         40  { color = Color.cafeNoir }
         60  { color = Color.darkOliveGreen }
-        80  { color = Color.darkBlue }
+        80  { color = Color.darkSlateBlue }
         100 { color = Color.blackBean }
     }
     rule(".color-gif") {
