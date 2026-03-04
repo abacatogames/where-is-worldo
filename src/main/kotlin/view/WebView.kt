@@ -36,8 +36,10 @@ fun interface WebView : (Game) -> String {
                         }
                         body {
                             div("container") {
-                                h1 { +"Where is Worldo today?" }
-                                h2 { +"Worldo may be in any country in the world." }
+                                div("image") {
+                                    h1 { +"Where is Worldo today?" }
+                                    h2 { +"Worldo may be in any country in the world." }
+                                }
                                 instructionsAndInput(game)
                                 gameBoard(game.validGuesses)
                             }

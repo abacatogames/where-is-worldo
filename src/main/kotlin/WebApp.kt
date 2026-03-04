@@ -9,6 +9,7 @@ import io.ktor.http.content.TextContent
 import io.ktor.http.withCharset
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
+import io.ktor.server.http.content.staticResources
 import io.ktor.server.netty.EngineMain
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respond
@@ -87,5 +88,6 @@ fun Application.module() {
                 call.respondRedirect("/")
             }.onFailure { call.gameNotFound() }
         }
+        staticResources("/", "static")
     }
 }

@@ -1,6 +1,7 @@
 package io.github.cbaumont.view
 
 import kotlinx.css.Align
+import kotlinx.css.BackgroundRepeat
 import kotlinx.css.Border
 import kotlinx.css.BorderStyle
 import kotlinx.css.Color
@@ -8,9 +9,11 @@ import kotlinx.css.CssBuilder
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.FontWeight
+import kotlinx.css.Image
 import kotlinx.css.JustifyContent
 import kotlinx.css.Margin
 import kotlinx.css.Padding
+import kotlinx.css.RelativePosition
 import kotlinx.css.TextAlign
 import kotlinx.css.TextTransform
 import kotlinx.css.alignItems
@@ -19,6 +22,10 @@ import kotlinx.css.animationIterationCount
 import kotlinx.css.animationName
 import kotlinx.css.animationTimingFunction
 import kotlinx.css.backgroundColor
+import kotlinx.css.backgroundImage
+import kotlinx.css.backgroundPosition
+import kotlinx.css.backgroundRepeat
+import kotlinx.css.backgroundSize
 import kotlinx.css.border
 import kotlinx.css.borderRadius
 import kotlinx.css.color
@@ -74,11 +81,19 @@ val styles = CssBuilder().apply {
         margin = Margin(0.px)
         textAlign = TextAlign.center
     }
+    rule(".image") {
+        backgroundImage = Image("url(/worldo.png)")
+        backgroundSize = "contain"
+        backgroundPosition = RelativePosition.rightTop(yOffset = 1.vw, xOffset = clamp(100.px, 8.5.vw, 120.px))
+        backgroundRepeat = BackgroundRepeat.noRepeat
+        padding = Padding(0.5.vw)
+    }
     h1 {
-        fontSize = 3.em
+        fontSize = 3.2.em
         fontWeight = FontWeight.bold
         marginBottom = 16.px
         color = Color.blackBean
+        put("-webkit-text-stroke", "0.3px #c19a6b")
     }
     h2 {
         fontSize = 1.6.em
@@ -102,7 +117,7 @@ val styles = CssBuilder().apply {
     }
     rule(".form-slot") {
         height = 48.px
-        paddingBottom = 13.px
+        paddingBottom = 15.px
     }
     rule("input[type=text]") {
         flexGrow = 1.0
@@ -137,10 +152,10 @@ val styles = CssBuilder().apply {
         display = Display.flex
         justifyContent = JustifyContent.center
         alignItems = Align.center
-        width = 48.px
-        height = 52.px
+        width = clamp(58.px, 4.vw, 68.px)
+        height = clamp(60.px, 4.8.vw, 70.px)
         fontWeight = FontWeight.bold
-        fontSize = clamp(12.px, 2.2.vw, 22.px)
+        fontSize = clamp(13.px, 2.3.vw, 23.px)
         borderRadius = clamp(6.px, 0.5.vw, 8.px)
         backgroundColor = Color.cafeNoir
         color = Color.white
