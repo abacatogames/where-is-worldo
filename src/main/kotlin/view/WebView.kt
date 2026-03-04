@@ -39,21 +39,28 @@ fun interface WebView : (Game) -> String {
                                 div("image") {
                                     h1 { +"Where is Worldo today?" }
                                     h2 { +"Worldo may be in any country in the world." }
+                                    gameInfo(game)
                                 }
-                                instructionsAndInput(game)
+                                guessForm(game.state)
                                 gameBoard(game.validGuesses)
                             }
                         }
                     }
 
-                private fun FlowContent.guessForm(hidden: Boolean = false) =
-                    div("form-slot") {
-                        form(action = "/", method = FormMethod.post) {
-                            textInput(name = "guess") {
-                                placeholder = "TYPE HERE"
-                                autoFocus = true
+                private fun FlowContent.guessForm(gameState: GameState) =
+                    when (gameState) {
+                        GameState.IN_PROGRESS, GameState.NEW -> {
+                            div("form-slot") {
+                                form(action = "/", method = FormMethod.post) {
+                                    textInput(name = "guess") {
+                                        placeholder = "TYPE HERE"
+                                        autoFocus = true
+                                    }
+                                }
                             }
                         }
+
+                        else -> {}
                     }
 
                 private fun FlowContent.gameBoard(validGuesses: List<WordGuess>) =
@@ -71,7 +78,7 @@ fun interface WebView : (Game) -> String {
                         }
                     }
 
-                private fun FlowContent.instructionsAndInput(game: Game) {
+                private fun FlowContent.gameInfo(game: Game) {
                     when (game.state) {
                         GameState.WON -> {
                             h2("won") { +"Congratulations, you found Worldo!" }
@@ -85,7 +92,6 @@ fun interface WebView : (Game) -> String {
 
                         GameState.NEW -> {
                             h2 { +"Start by making a guess." }
-                            guessForm()
                         }
 
                         GameState.IN_PROGRESS -> {
@@ -94,7 +100,6 @@ fun interface WebView : (Game) -> String {
                             } else {
                                 h2 { +"You have ${game.attemptsLeft} attempts left. Make another guess." }
                             }
-                            guessForm()
                         }
                     }
                 }

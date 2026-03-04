@@ -84,7 +84,7 @@ val styles = CssBuilder().apply {
     rule(".image") {
         backgroundImage = Image("url(/worldo.png)")
         backgroundSize = "contain"
-        backgroundPosition = RelativePosition.rightTop(yOffset = 1.vw, xOffset = clamp(100.px, 8.5.vw, 120.px))
+        backgroundPosition = RelativePosition.rightTop
         backgroundRepeat = BackgroundRepeat.noRepeat
         padding = Padding(0.5.vw)
     }
@@ -100,6 +100,7 @@ val styles = CssBuilder().apply {
         fontWeight = FontWeight.bold
         marginBottom = 24.px
         color = Color.cafeNoir
+        put("-webkit-text-stroke", "0.1px #c19a6b")
     }
     rule(".won") {
         color = Color.darkOliveGreen
