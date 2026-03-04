@@ -1,4 +1,4 @@
-import io.github.cbaumont.generateWordForDate
+import io.github.cbaumont.word.generateWordForDate
 import java.time.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertEquals

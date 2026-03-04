@@ -2,7 +2,7 @@ package io.github.cbaumont.view
 
 import io.github.cbaumont.Game
 import io.github.cbaumont.GameState
-import io.github.cbaumont.WordGuess
+import io.github.cbaumont.word.WordGuess
 import io.github.cbaumont.geo.CardinalDirection
 import io.github.cbaumont.geo.Country
 import io.github.cbaumont.geo.GeoDistance

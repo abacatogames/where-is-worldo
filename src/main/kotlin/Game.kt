@@ -1,5 +1,8 @@
 package io.github.cbaumont
 
+import io.github.cbaumont.word.VerifiedWord
+import io.github.cbaumont.word.WordGuess
+
 class Game(
     val maxAttempts: Int = 6,
     val proposedWord: String,

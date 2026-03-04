@@ -3,6 +3,8 @@ package io.github.cbaumont
 import io.github.cbaumont.geo.isAValidCountry
 import io.github.cbaumont.view.WebView
 import io.github.cbaumont.view.gameNotFound
+import io.github.cbaumont.word.WordGuess
+import io.github.cbaumont.word.generateWordForDate
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.TextContent

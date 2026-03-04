@@ -1,4 +1,4 @@
-package io.github.cbaumont
+package io.github.cbaumont.word
 
 import io.github.cbaumont.geo.randomCountry
 import java.time.LocalDate

@@ -1,4 +1,4 @@
-package io.github.cbaumont
+package io.github.cbaumont.word
 
 @JvmInline
 value class VerifiedWord internal constructor(val value: String) {
