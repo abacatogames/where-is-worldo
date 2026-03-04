@@ -8,11 +8,13 @@ import kotlinx.css.Color
 import kotlinx.css.CssBuilder
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
+import kotlinx.css.FontStyle
 import kotlinx.css.FontWeight
 import kotlinx.css.Image
 import kotlinx.css.JustifyContent
 import kotlinx.css.Margin
 import kotlinx.css.Padding
+import kotlinx.css.Position
 import kotlinx.css.RelativePosition
 import kotlinx.css.TextAlign
 import kotlinx.css.TextTransform
@@ -28,6 +30,7 @@ import kotlinx.css.backgroundRepeat
 import kotlinx.css.backgroundSize
 import kotlinx.css.border
 import kotlinx.css.borderRadius
+import kotlinx.css.bottom
 import kotlinx.css.color
 import kotlinx.css.display
 import kotlinx.css.em
@@ -35,13 +38,16 @@ import kotlinx.css.flexDirection
 import kotlinx.css.flexGrow
 import kotlinx.css.fontFamily
 import kotlinx.css.fontSize
+import kotlinx.css.fontStyle
 import kotlinx.css.fontWeight
+import kotlinx.css.footer
 import kotlinx.css.gap
 import kotlinx.css.h1
 import kotlinx.css.h2
 import kotlinx.css.height
 import kotlinx.css.justifyContent
 import kotlinx.css.keyframes
+import kotlinx.css.left
 import kotlinx.css.letterSpacing
 import kotlinx.css.margin
 import kotlinx.css.marginBottom
@@ -49,9 +55,11 @@ import kotlinx.css.maxWidth
 import kotlinx.css.padding
 import kotlinx.css.paddingBottom
 import kotlinx.css.pct
+import kotlinx.css.position
 import kotlinx.css.properties.Timing
 import kotlinx.css.properties.s
 import kotlinx.css.px
+import kotlinx.css.rem
 import kotlinx.css.textAlign
 import kotlinx.css.textTransform
 import kotlinx.css.vw
@@ -81,7 +89,7 @@ val styles = CssBuilder().apply {
         margin = Margin(0.px)
         textAlign = TextAlign.center
     }
-    rule(".image") {
+    rule(".with-image") {
         backgroundImage = Image("url(/worldo.png)")
         backgroundSize = "contain"
         backgroundPosition = RelativePosition.rightTop
@@ -99,7 +107,7 @@ val styles = CssBuilder().apply {
         fontSize = 1.6.em
         fontWeight = FontWeight.bold
         marginBottom = 24.px
-        color = Color.cafeNoir
+        color = Color.blackBean
         put("-webkit-text-stroke", "0.1px #c19a6b")
     }
     rule(".won") {
@@ -191,6 +199,28 @@ val styles = CssBuilder().apply {
         animationTimingFunction = Timing.linear
         animationIterationCount = Int.MAX_VALUE
         animationName = "color-animation"
+    }
+    rule(".how-to") {
+        padding = Padding(12.px)
+        fontSize = 1.1.em
+        color = Color.blackBean
+        textAlign = TextAlign.justifyAll
+    }
+    rule(".notes") {
+        fontSize = 1.em
+        color = Color.blackBean
+        textAlign = TextAlign.left
+        fontStyle = FontStyle.italic
+    }
+    footer {
+        fontSize = 1.em
+        color = Color.blackBean
+        textAlign = TextAlign.center
+        position = Position.fixed
+        bottom = 0.px
+        left = 0.px
+        width = 100.pct
+        height = 2.5.rem
     }
 }
 

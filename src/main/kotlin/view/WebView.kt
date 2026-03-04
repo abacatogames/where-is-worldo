@@ -13,14 +13,18 @@ import kotlinx.html.FlowContent
 import kotlinx.html.FormMethod
 import kotlinx.html.body
 import kotlinx.html.br
+import kotlinx.html.details
 import kotlinx.html.div
+import kotlinx.html.footer
 import kotlinx.html.form
 import kotlinx.html.h1
 import kotlinx.html.h2
 import kotlinx.html.head
 import kotlinx.html.html
+import kotlinx.html.p
 import kotlinx.html.stream.createHTML
 import kotlinx.html.style
+import kotlinx.html.summary
 import kotlinx.html.textInput
 import kotlinx.html.title
 
@@ -36,13 +40,15 @@ fun interface WebView : (Game) -> String {
                         }
                         body {
                             div("container") {
-                                div("image") {
+                                div("with-image") {
                                     h1 { +"Where is Worldo today?" }
                                     h2 { +"Worldo may be in any country in the world." }
                                     gameInfo(game)
                                 }
                                 guessForm(game.state)
                                 gameBoard(game.validGuesses)
+                                howToPlay()
+                                footer("footer") { p { +"© 2026 Abacato Games" } }
                             }
                         }
                     }
@@ -113,6 +119,34 @@ fun interface WebView : (Game) -> String {
                         +distance.direction.toArrow()
                         br
                         +"${distance.km} KM"
+                    }
+                }
+
+                private fun FlowContent.howToPlay() {
+                    details {
+                        summary("how-to") { +"How to play?" }
+                        p("how-to") {
+                            +"Every day Worldo travels to a different country. You have 6 attempts to discover where he is."
+                            br
+                            +"If a letter in your guess matches a letter in the correct country (regardless of the position), its tile will be green. If it doesn’t, it will be brown."
+                            br
+                            +"For example, if your guess contains two \"A\"s and only one turns green, that means the correct country has one \"A\" in it."
+                            br
+                            +"Additionally, after each attempt, you will see a hint: a tile showing the distance* and direction** between your guess and the correct country."
+                        }
+                        div("board") {
+                            div("row") {
+                                div("tile correct") { +"G" }
+                                div("tile absent") { +"U" }
+                                div("tile absent") { +"Y" }
+                                div("tile correct") { +"A" }
+                                div("tile correct") { +"N" }
+                                div("tile absent") { +"A" }
+                            }
+                        }
+                        p("how-to") { +"In the example above, the correct country is Greenland." }
+                        p("notes") { +"* Distances are calculated based on the approx center of both countries." }
+                        p("notes") { +"** Direction is calculated using a simplified version of the azimuth formula. It might not always be very precise or intuitive, specially on long distances." }
                     }
                 }
             }
