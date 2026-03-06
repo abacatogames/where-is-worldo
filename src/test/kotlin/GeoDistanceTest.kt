@@ -2,8 +2,8 @@ import io.github.cbaumont.geo.CardinalDirection
 import io.github.cbaumont.geo.Country
 import io.github.cbaumont.geo.Distance
 import io.github.cbaumont.geo.GeoDistance
+import kotlin.test.Test
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Test
 
 class GeoDistanceTest {
 

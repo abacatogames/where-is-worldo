@@ -16,6 +16,7 @@ import io.ktor.server.netty.EngineMain
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondRedirect
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.routing
@@ -49,6 +50,9 @@ fun Application.module() {
         }
     }
     routing {
+        get("/ping") {
+            call.respondText(text = "pong")
+        }
         get("/") {
             val currentDateRef = LocalDate.now().toEpochDay()
             val session = call.sessions.get<GameSession>()

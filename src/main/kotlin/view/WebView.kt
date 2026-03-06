@@ -69,6 +69,9 @@ fun interface WebView : (Game) -> String {
                                     textInput(name = "guess") {
                                         placeholder = "TYPE HERE"
                                         autoFocus = true
+                                        maxLength = "100"
+                                        required = true
+                                        minLength = "3"
                                     }
                                 }
                             }
@@ -82,10 +85,9 @@ fun interface WebView : (Game) -> String {
                         for (guess in validGuesses.reversed()) {
                             div("row") {
                                 guess.matches.forEach {
-                                    val cls = if (it.value) "correct" else "absent"
-                                    div("tile $cls") {
-                                        +guess.value[it.key].toString()
-                                    }
+                                    val char = guess.value[it.key]
+                                    val tileClass = if (char == ' ' || !it.value) "absent" else "correct"
+                                    div("tile $tileClass") { +char.toString() }
                                 }
                                 if (!guess.fullMatch) distanceHint(guess)
                             }

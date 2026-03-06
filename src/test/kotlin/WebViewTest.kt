@@ -2,13 +2,13 @@ import io.github.cbaumont.Game
 import io.github.cbaumont.view.WebView
 import kotlin.test.Test
 import kotlin.test.assertContains
+import kotlin.test.assertTrue
 import kotlinx.html.FormMethod
 import kotlinx.html.br
 import kotlinx.html.div
 import kotlinx.html.form
 import kotlinx.html.stream.createHTML
 import kotlinx.html.textInput
-import org.junit.jupiter.api.Assertions.assertTrue
 
 class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
 
@@ -55,6 +55,9 @@ class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
             textInput(name = "guess") {
                 placeholder = "TYPE HERE"
                 autoFocus = true
+                maxLength = "100"
+                required = true
+                minLength = "3"
             }
         }
         assertContains(result, expected)

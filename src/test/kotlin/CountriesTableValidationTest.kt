@@ -1,9 +1,8 @@
 import io.github.cbaumont.geo.CountriesTable
 import java.text.Normalizer
 import java.util.Locale
-import kotlin.collections.map
+import kotlin.test.Test
 import kotlin.test.assertEquals
-import org.junit.jupiter.api.Test
 
 class CountriesTableValidationTest {
 
