@@ -54,7 +54,7 @@ fun interface WebView : (Game) -> String {
                                 }
                                 gameInfo(game)
                                 guessForm(game.state)
-                                gameBoard(game.validGuesses)
+                                gameBoard(game.validGuesses, !game.lastGuessWasInvalid)
                                 howToPlay()
                                 footer { p { +"© 2026 Abacato Games" } }
                             }
@@ -80,14 +80,15 @@ fun interface WebView : (Game) -> String {
                         else -> {}
                     }
 
-                private fun FlowContent.gameBoard(validGuesses: List<WordGuess>) =
+                private fun FlowContent.gameBoard(validGuesses: List<WordGuess>, shouldSlide: Boolean = true) =
                     div("board") {
-                        for (guess in validGuesses.reversed()) {
+                        validGuesses.reversed().forEachIndexed { idx, guess ->
                             div("row") {
                                 guess.matches.forEach {
                                     val char = guess.value[it.key]
                                     val tileClass = if (char == ' ' || !it.value) "absent" else "correct"
-                                    div("tile $tileClass") { +char.toString() }
+                                    val classes = tileClass + if (idx == 0 && shouldSlide) " slide" else ""
+                                    div("tile $classes") { +char.toString() }
                                 }
                                 if (!guess.fullMatch) distanceHint(guess)
                             }

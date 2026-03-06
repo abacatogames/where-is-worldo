@@ -19,7 +19,9 @@ import kotlinx.css.RelativePosition
 import kotlinx.css.TextAlign
 import kotlinx.css.TextTransform
 import kotlinx.css.alignItems
+import kotlinx.css.animationDelay
 import kotlinx.css.animationDuration
+import kotlinx.css.animationFillMode
 import kotlinx.css.animationIterationCount
 import kotlinx.css.animationName
 import kotlinx.css.animationTimingFunction
@@ -31,6 +33,7 @@ import kotlinx.css.backgroundSize
 import kotlinx.css.border
 import kotlinx.css.borderRadius
 import kotlinx.css.bottom
+import kotlinx.css.boxShadow
 import kotlinx.css.color
 import kotlinx.css.display
 import kotlinx.css.em
@@ -56,12 +59,21 @@ import kotlinx.css.padding
 import kotlinx.css.paddingBottom
 import kotlinx.css.pct
 import kotlinx.css.position
+import kotlinx.css.properties.BoxShadow
+import kotlinx.css.properties.FillMode
 import kotlinx.css.properties.Timing
+import kotlinx.css.properties.Transforms
+import kotlinx.css.properties.deg
+import kotlinx.css.properties.linearGradient
+import kotlinx.css.properties.rotateX
 import kotlinx.css.properties.s
+import kotlinx.css.properties.translateX
+import kotlinx.css.properties.translateY
 import kotlinx.css.px
 import kotlinx.css.rem
 import kotlinx.css.textAlign
 import kotlinx.css.textTransform
+import kotlinx.css.transform
 import kotlinx.css.vw
 import kotlinx.css.width
 
@@ -156,6 +168,12 @@ val styles = CssBuilder().apply {
         width = 100.pct
         justifyContent = JustifyContent.center
         alignItems = Align.center
+        paddingBottom = 0.1.vw
+    }
+    rule(".row.slide") {
+        animationDuration = 0.5.s
+        animationName = "slide-in"
+        animationTimingFunction = Timing.easeInOut
     }
     rule(".tile") {
         display = Display.flex
@@ -169,19 +187,46 @@ val styles = CssBuilder().apply {
         backgroundColor = Color.cafeNoir
         color = Color.white
         textTransform = TextTransform.uppercase
+
+        boxShadow += BoxShadow(
+            offsetX = 0.px,
+            offsetY = 4.px,
+            blurRadius = 6.px,
+            color = Color.black
+        )
+    }
+    rule(".tile.slide") {
+        animationName = "slide-in"
+        animationDuration = 0.4.s
+        animationTimingFunction = Timing.easeInOut
+        animationFillMode = FillMode.forwards
+    }
+    (1..100).forEach { i ->
+        rule(".tile:nth-child($i)") {
+            animationDelay = (i * 0.03).s
+        }
     }
     rule(".tile.hint") {
         backgroundColor = Color.indianYellow
         fontSize = clamp(12.px, 2.2.vw, 14.px)
+        backgroundImage = linearGradient(0.deg) {
+            colorStop(Color("#ffd399"), 0.pct)
+            colorStop(Color.transparent, 10.pct)
+        }
     }
     rule(".tile.correct") {
         backgroundColor = Color.correctGuess
-    }
-    rule(".tile.present") {
-        backgroundColor = Color("#b59f3b")
+        backgroundImage = linearGradient(0.deg) {
+            colorStop(Color("#8cbf88"), 0.pct)
+            colorStop(Color.transparent, 10.pct)
+        }
     }
     rule(".tile.absent") {
         backgroundColor = Color.cafeNoir
+        backgroundImage = linearGradient(0.deg) {
+            colorStop(Color("#735c45"), 0.pct)
+            colorStop(Color.transparent, 10.pct)
+        }
     }
     keyframes("color-animation") {
         0 { color = Color.blackBean }
@@ -190,6 +235,22 @@ val styles = CssBuilder().apply {
         60  { color = Color.darkOliveGreen }
         80  { color = Color.darkSlateBlue }
         100 { color = Color.blackBean }
+    }
+    keyframes("slide-in") {
+        from {
+            val tsf = Transforms()
+            tsf.translateX(100.pct)
+            tsf.translateY((-10).px)
+            tsf.rotateX(90.deg)
+            transform = tsf
+        }
+        to {
+            val tsf = Transforms()
+            tsf.translateX(0.px)
+            tsf.translateY(0.px)
+            tsf.rotateX(0.deg)
+            transform = tsf
+        }
     }
     rule(".color-gif") {
         color = Color.blackBean
