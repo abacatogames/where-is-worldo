@@ -2,9 +2,9 @@ package io.github.cbaumont.view
 
 import io.github.cbaumont.Game
 import io.github.cbaumont.GameState
-import io.github.cbaumont.word.WordGuess
 import io.github.cbaumont.view.CLIColours.DEFAULT
 import io.github.cbaumont.view.CLIColours.GREEN
+import io.github.cbaumont.word.WordGuess
 
 fun interface CLIView : (Game) -> String {
     companion object {
@@ -27,7 +27,7 @@ fun interface CLIView : (Game) -> String {
                             }
                         }
 
-                        GameState.WON -> "Congratulations, you found Worldo!"
+                        GameState.WON -> "Congratulations, you found Wordo!"
                         GameState.LOST -> "You’re out of attempts for today — better luck tomorrow!"
                     }
 

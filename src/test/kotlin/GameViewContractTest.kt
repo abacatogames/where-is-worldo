@@ -51,7 +51,7 @@ abstract class GameViewContractTest(val gameView: (Game) -> String) {
 
         game.validateAndAddGuess("GREENLAND")
 
-        assertContains(gameView(game), "Congratulations, you found Worldo!")
+        assertContains(gameView(game), "Congratulations, you found Wordo!")
     }
 
     @Test

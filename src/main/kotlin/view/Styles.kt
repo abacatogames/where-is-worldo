@@ -90,7 +90,7 @@ val styles = CssBuilder().apply {
         textAlign = TextAlign.center
     }
     rule(".with-image") {
-        backgroundImage = Image("url(/worldo.png)")
+        backgroundImage = Image("url(/wordov2.webp)")
         backgroundSize = "contain"
         backgroundPosition = RelativePosition.rightTop
         backgroundRepeat = BackgroundRepeat.noRepeat
@@ -220,7 +220,7 @@ val styles = CssBuilder().apply {
         bottom = 0.px
         left = 0.px
         width = 100.pct
-        height = 2.5.rem
+        height = 2.rem
     }
 }
 

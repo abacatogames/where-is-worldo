@@ -2,10 +2,18 @@ package io.github.cbaumont.view
 
 import io.github.cbaumont.Game
 import io.github.cbaumont.GameState
-import io.github.cbaumont.word.WordGuess
 import io.github.cbaumont.geo.CardinalDirection
+import io.github.cbaumont.geo.CardinalDirection.EAST
+import io.github.cbaumont.geo.CardinalDirection.NORTH
+import io.github.cbaumont.geo.CardinalDirection.NORTH_EAST
+import io.github.cbaumont.geo.CardinalDirection.NORTH_WEST
+import io.github.cbaumont.geo.CardinalDirection.SOUTH
+import io.github.cbaumont.geo.CardinalDirection.SOUTH_EAST
+import io.github.cbaumont.geo.CardinalDirection.SOUTH_WEST
+import io.github.cbaumont.geo.CardinalDirection.WEST
 import io.github.cbaumont.geo.Country
 import io.github.cbaumont.geo.GeoDistance
+import io.github.cbaumont.word.WordGuess
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.html.respondHtml
 import io.ktor.server.routing.RoutingCall
@@ -35,20 +43,20 @@ fun interface WebView : (Game) -> String {
                 override fun invoke(game: Game): String =
                     createHTML().html {
                         head {
-                            title { +"Where is Worldo?" }
+                            title { +"Where is Wordo?" }
                             style { +styles.toString() }
                         }
                         body {
                             div("container") {
                                 div("with-image") {
-                                    h1 { +"Where is Worldo today?" }
-                                    h2 { +"Worldo may be in any country in the world." }
-                                    gameInfo(game)
+                                    h1 { +"Where is Wordo today?" }
+                                    h2 { +"Wordo may be in any country in the world." }
                                 }
+                                gameInfo(game)
                                 guessForm(game.state)
                                 gameBoard(game.validGuesses)
                                 howToPlay()
-                                footer("footer") { p { +"© 2026 Abacato Games" } }
+                                footer { p { +"© 2026 Abacato Games" } }
                             }
                         }
                     }
@@ -87,7 +95,7 @@ fun interface WebView : (Game) -> String {
                 private fun FlowContent.gameInfo(game: Game) {
                     when (game.state) {
                         GameState.WON -> {
-                            h2("won") { +"Congratulations, you found Worldo!" }
+                            h2("won") { +"Congratulations, you found Wordo!" }
                             div("form-slot color-gif") { +"YOU WON!" }
                         }
 
@@ -126,14 +134,15 @@ fun interface WebView : (Game) -> String {
                     details {
                         summary("how-to") { +"How to play?" }
                         p("how-to") {
-                            +"Every day Worldo travels to a different country. You have 6 attempts to discover where he is."
+                            +"Every day Wordo travels to a different country. You have 6 attempts to discover where he is."
                             br
                             +"If a letter in your guess matches a letter in the correct country (regardless of the position), its tile will be green. If it doesn’t, it will be brown."
                             br
                             +"For example, if your guess contains two \"A\"s and only one turns green, that means the correct country has one \"A\" in it."
                             br
-                            +"Additionally, after each attempt, you will see a hint: a tile showing the distance* and direction** between your guess and the correct country."
+
                         }
+                        p("how-to") { +"In the following example, the correct country is Greenland:" }
                         div("board") {
                             div("row") {
                                 div("tile correct") { +"G" }
@@ -142,9 +151,10 @@ fun interface WebView : (Game) -> String {
                                 div("tile correct") { +"A" }
                                 div("tile correct") { +"N" }
                                 div("tile absent") { +"A" }
+                                div("tile hint") { +"${NORTH_EAST.toArrow()} 7510KM" }
                             }
                         }
-                        p("how-to") { +"In the example above, the correct country is Greenland." }
+                        p("how-to") { +"Additionally, after each attempt, you will see a hint: a tile showing the distance* and direction** between your guess and the correct country." }
                         p("notes") { +"* Distances are calculated based on the approx center of both countries." }
                         p("notes") { +"** Direction is calculated using a simplified version of the azimuth formula. It might not always be very precise or intuitive, specially on long distances." }
                     }
@@ -155,14 +165,14 @@ fun interface WebView : (Game) -> String {
 
 private fun CardinalDirection.toArrow(): String =
     when (this) {
-        CardinalDirection.SOUTH -> "⬇️"
-        CardinalDirection.WEST -> "⬅️"
-        CardinalDirection.NORTH -> "⬆️"
-        CardinalDirection.EAST -> "➡️"
-        CardinalDirection.SOUTH_WEST -> "↙️"
-        CardinalDirection.SOUTH_EAST -> "↘️"
-        CardinalDirection.NORTH_WEST -> "↖️"
-        CardinalDirection.NORTH_EAST -> "↗️"
+        SOUTH -> "⬇️"
+        WEST -> "⬅️"
+        NORTH -> "⬆️"
+        EAST -> "➡️"
+        SOUTH_WEST -> "↙️"
+        SOUTH_EAST -> "↘️"
+        NORTH_WEST -> "↖️"
+        NORTH_EAST -> "↗️"
     }
 
 suspend fun RoutingCall.gameNotFound() =
