@@ -1,20 +1,31 @@
 {
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "automerge": false,
   "timezone": "Europe/London",
-  "schedule": ["* 0-3 1 * *"],
+  "schedule": [
+    "* 0-3 1 * *"
+  ],
   "dependencyDashboard": true,
   "packageRules": [
     {
-      "matchManagers": ["gradle"],
+      "matchManagers": [
+        "gradle"
+      ],
       "groupName": "gradle dependencies"
     },
     {
-      "matchDatasources": ["docker"],
+      "matchDatasources": [
+        "docker"
+      ],
       "groupName": "docker base images"
     }
   ],
   "prHourlyLimit": 2,
   "prConcurrentLimit": 5,
-  "labels": ["dependencies", "renovate"]
+  "labels": [
+    "dependencies",
+    "renovate"
+  ]
 }
