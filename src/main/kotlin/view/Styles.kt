@@ -65,7 +65,6 @@ import kotlinx.css.properties.Timing
 import kotlinx.css.properties.Transforms
 import kotlinx.css.properties.deg
 import kotlinx.css.properties.linearGradient
-import kotlinx.css.properties.rotateX
 import kotlinx.css.properties.s
 import kotlinx.css.properties.translateX
 import kotlinx.css.properties.translateY
@@ -190,9 +189,9 @@ val styles = CssBuilder().apply {
 
         boxShadow += BoxShadow(
             offsetX = 0.px,
-            offsetY = 4.px,
+            offsetY = 3.px,
             blurRadius = 6.px,
-            color = Color.black
+            color = Color.blackBean
         )
     }
     rule(".tile.slide") {
@@ -241,14 +240,12 @@ val styles = CssBuilder().apply {
             val tsf = Transforms()
             tsf.translateX(100.pct)
             tsf.translateY((-10).px)
-            tsf.rotateX(90.deg)
             transform = tsf
         }
         to {
             val tsf = Transforms()
             tsf.translateX(0.px)
             tsf.translateY(0.px)
-            tsf.rotateX(0.deg)
             transform = tsf
         }
     }
