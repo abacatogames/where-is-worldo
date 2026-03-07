@@ -1,4 +1,4 @@
-import io.github.cbaumont.word.WordGuess
+import com.abacatogames.word.WordGuess
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

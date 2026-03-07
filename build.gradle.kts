@@ -5,7 +5,7 @@ plugins {
     application
 }
 
-group = "io.github.cbaumont"
+group = "com.abacatogames"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -33,7 +33,7 @@ kotlin {
 }
 
 application {
-    mainClass = "io.github.cbaumont.WebAppKt"
+    mainClass = "com.abacatogames.WebAppKt"
 }
 
 tasks.named<JavaExec>("run") {

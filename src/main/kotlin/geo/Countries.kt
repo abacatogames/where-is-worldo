@@ -1,4 +1,4 @@
-package io.github.cbaumont.geo
+package com.abacatogames.geo
 
 import kotlin.random.Random
 

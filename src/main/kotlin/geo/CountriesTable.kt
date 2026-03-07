@@ -1,4 +1,4 @@
-package io.github.cbaumont.geo
+package com.abacatogames.geo
 
 val CountriesTable = setOf(
     Country("Afghanistan", 33.939, 67.71),

@@ -1,10 +1,10 @@
-package io.github.cbaumont.view
+package com.abacatogames.view
 
-import io.github.cbaumont.Game
-import io.github.cbaumont.GameState
-import io.github.cbaumont.view.CLIColours.DEFAULT
-import io.github.cbaumont.view.CLIColours.GREEN
-import io.github.cbaumont.word.WordGuess
+import com.abacatogames.Game
+import com.abacatogames.GameState
+import com.abacatogames.view.CLIColours.DEFAULT
+import com.abacatogames.view.CLIColours.GREEN
+import com.abacatogames.word.WordGuess
 
 fun interface CLIView : (Game) -> String {
     companion object {

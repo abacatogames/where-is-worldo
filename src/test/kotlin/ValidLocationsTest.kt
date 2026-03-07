@@ -1,4 +1,4 @@
-import io.github.cbaumont.geo.isAValidCountry
+import com.abacatogames.geo.isAValidCountry
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

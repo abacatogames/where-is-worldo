@@ -1,7 +1,7 @@
-package io.github.cbaumont
+package com.abacatogames
 
-import io.github.cbaumont.geo.isAValidCountry
-import io.github.cbaumont.view.CLIView
+import com.abacatogames.geo.isAValidCountry
+import com.abacatogames.view.CLIView
 
 fun main() {
     val game = Game(

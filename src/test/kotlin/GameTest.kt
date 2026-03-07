@@ -1,6 +1,6 @@
-import io.github.cbaumont.Game
-import io.github.cbaumont.GameState
-import io.github.cbaumont.geo.isAValidCountry
+import com.abacatogames.Game
+import com.abacatogames.GameState
+import com.abacatogames.geo.isAValidCountry
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals

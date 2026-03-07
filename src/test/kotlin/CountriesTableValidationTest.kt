@@ -1,4 +1,4 @@
-import io.github.cbaumont.geo.CountriesTable
+import com.abacatogames.geo.CountriesTable
 import java.text.Normalizer
 import java.util.Locale
 import kotlin.test.Test

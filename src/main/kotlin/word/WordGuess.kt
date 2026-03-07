@@ -1,4 +1,4 @@
-package io.github.cbaumont.word
+package com.abacatogames.word
 
 import kotlinx.serialization.Serializable
 

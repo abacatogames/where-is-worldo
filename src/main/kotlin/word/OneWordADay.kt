@@ -1,6 +1,6 @@
-package io.github.cbaumont.word
+package com.abacatogames.word
 
-import io.github.cbaumont.geo.randomCountry
+import com.abacatogames.geo.randomCountry
 import java.time.LocalDate
 import java.time.LocalTime.MIN
 import java.time.ZoneOffset.UTC

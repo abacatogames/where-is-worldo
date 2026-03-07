@@ -1,4 +1,4 @@
-package io.github.cbaumont.view
+package com.abacatogames.view
 
 val worldo =
     """

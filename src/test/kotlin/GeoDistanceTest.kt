@@ -1,7 +1,7 @@
-import io.github.cbaumont.geo.CardinalDirection
-import io.github.cbaumont.geo.Country
-import io.github.cbaumont.geo.Distance
-import io.github.cbaumont.geo.GeoDistance
+import com.abacatogames.geo.CardinalDirection
+import com.abacatogames.geo.Country
+import com.abacatogames.geo.Distance
+import com.abacatogames.geo.GeoDistance
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

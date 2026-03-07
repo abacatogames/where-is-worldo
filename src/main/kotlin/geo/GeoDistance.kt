@@ -1,4 +1,4 @@
-package io.github.cbaumont.geo
+package com.abacatogames.geo
 
 import kotlin.math.atan2
 import kotlin.math.roundToInt

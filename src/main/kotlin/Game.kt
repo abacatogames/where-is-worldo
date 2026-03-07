@@ -1,7 +1,7 @@
-package io.github.cbaumont
+package com.abacatogames
 
-import io.github.cbaumont.word.VerifiedWord
-import io.github.cbaumont.word.WordGuess
+import com.abacatogames.word.VerifiedWord
+import com.abacatogames.word.WordGuess
 
 class Game(
     val maxAttempts: Int = 6,
