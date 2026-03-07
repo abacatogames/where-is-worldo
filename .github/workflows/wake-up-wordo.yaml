@@ -1,0 +1,15 @@
+name: Wake Up Wordo
+
+on:
+  schedule:
+    - cron: '*/14 * * * *'
+  workflow_dispatch:
+
+jobs:
+  wake-up:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call the app
+        run: |
+          curl -f -v https://where-is-wordo.abacatogames.com || echo "Wordo is asleep..."
