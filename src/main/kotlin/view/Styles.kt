@@ -227,6 +227,10 @@ val styles = CssBuilder().apply {
             colorStop(Color.transparent, 10.pct)
         }
     }
+    rule(".tile.tiny") {
+        width = clamp(28.px, 2.vw, 38.px)
+        height = clamp(30.px, 2.8.vw, 40.px)
+    }
     keyframes("color-animation") {
         0 { color = Color.blackBean }
         20  { color = Color.darkRed }
@@ -264,10 +268,8 @@ val styles = CssBuilder().apply {
         color = Color.blackBean
         textAlign = TextAlign.justifyAll
     }
-    rule(".notes") {
+    rule(".how-to.notes") {
         fontSize = 1.em
-        color = Color.blackBean
-        textAlign = TextAlign.left
         fontStyle = FontStyle.italic
     }
     footer {

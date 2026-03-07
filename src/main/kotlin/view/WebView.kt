@@ -48,10 +48,7 @@ fun interface WebView : (Game) -> String {
                         }
                         body {
                             div("container") {
-                                div("with-image") {
-                                    h1 { +"Where is Wordo today?" }
-                                    h2 { +"Wordo may be in any country in the world." }
-                                }
+                                div("with-image") { whereIsWordo() }
                                 gameInfo(game)
                                 guessForm(game.state)
                                 gameBoard(game.validGuesses, !game.lastGuessWasInvalid)
@@ -80,17 +77,23 @@ fun interface WebView : (Game) -> String {
                         else -> {}
                     }
 
-                private fun FlowContent.gameBoard(validGuesses: List<WordGuess>, shouldSlide: Boolean = true) =
+                private fun FlowContent.gameBoard(
+                    validGuesses: List<WordGuess>,
+                    animationEnabled: Boolean = true,
+                    tinyTiles: Boolean = false,
+                    hintsEnabled: Boolean = true,
+                ) =
                     div("board") {
                         validGuesses.reversed().forEachIndexed { idx, guess ->
                             div("row") {
                                 guess.matches.forEach {
                                     val char = guess.value[it.key]
-                                    val tileClass = if (char == ' ' || !it.value) "absent" else "correct"
-                                    val classes = tileClass + if (idx == 0 && shouldSlide) " slide" else ""
-                                    div("tile $classes") { +char.toString() }
+                                    val correctOrAbsent = if (char == ' ' || !it.value) "absent" else "correct"
+                                    val slide = if (idx == 0 && animationEnabled) " slide" else ""
+                                    val tiny = if (tinyTiles) " tiny" else ""
+                                    div("tile $correctOrAbsent$slide$tiny") { +char.toString() }
                                 }
-                                if (!guess.fullMatch) distanceHint(guess)
+                                if (!guess.fullMatch && hintsEnabled) distanceHint(guess)
                             }
                         }
                     }
@@ -108,7 +111,7 @@ fun interface WebView : (Game) -> String {
                         }
 
                         GameState.NEW -> {
-                            h2 { +"Start by making a guess." }
+                            h2 { +"Take a guess, any country will do!" }
                         }
 
                         GameState.IN_PROGRESS -> {
@@ -141,26 +144,31 @@ fun interface WebView : (Game) -> String {
                             br
                             +"If a letter in your guess matches a letter in the correct country (regardless of the position), its tile will be green. If it doesn’t, it will be brown."
                             br
-                            +"For example, if your guess contains two \"A\"s and only one turns green, that means the correct country has one \"A\" in it."
+                            +"Additionally, after each attempt, you will see a hint: a tile showing the distance* and direction** between your guess and the correct country."
                             br
-
+                            +"For example, if your guess contains two \"A\"s and only one turns green, that means the correct country has one \"A\" in it."
                         }
                         p("how-to") { +"In the following example, the correct country is Greenland:" }
-                        div("board") {
-                            div("row") {
-                                div("tile correct") { +"G" }
-                                div("tile absent") { +"U" }
-                                div("tile absent") { +"Y" }
-                                div("tile correct") { +"A" }
-                                div("tile correct") { +"N" }
-                                div("tile absent") { +"A" }
-                                div("tile hint") { +"${NORTH_EAST.toArrow()} 7510KM" }
-                            }
+                        gameBoard(validGuesses = listOf(WordGuess("Guyana", "Greenland")), animationEnabled = false)
+                        p("how-to notes") {
+                            +"* Distances are calculated based on the approx center of both countries."
+                            br
+                            +"** Direction is calculated using a simplified version of the azimuth formula. It might not always be very precise or intuitive, specially on long distances."
                         }
-                        p("how-to") { +"Additionally, after each attempt, you will see a hint: a tile showing the distance* and direction** between your guess and the correct country." }
-                        p("notes") { +"* Distances are calculated based on the approx center of both countries." }
-                        p("notes") { +"** Direction is calculated using a simplified version of the azimuth formula. It might not always be very precise or intuitive, specially on long distances." }
                     }
+                }
+
+                private fun FlowContent.whereIsWordo() {
+                    gameBoard(
+                        validGuesses = listOf(
+                            WordGuess("wordo", "wrd"),
+                            WordGuess("is", "i"),
+                            WordGuess("where", "we"),
+                        ),
+                        animationEnabled = false,
+                        tinyTiles = true,
+                        hintsEnabled = false,
+                    )
                 }
             }
     }

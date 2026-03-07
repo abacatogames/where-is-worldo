@@ -12,7 +12,7 @@ abstract class GameViewContractTest(val gameView: (Game) -> String) {
             validator = { _ -> true }
         )
 
-        assertContains(gameView(game), "Start by making a guess.")
+        assertContains(gameView(game), "Take a guess, any country will do!")
     }
 
     @Test

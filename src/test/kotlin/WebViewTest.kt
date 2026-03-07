@@ -26,12 +26,12 @@ class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
 
         val expected =
             listOf(
-                createHTML().div("tile correct") { +"G" },
-                createHTML().div("tile absent") { +"U" },
-                createHTML().div("tile absent") { +"Y" },
-                createHTML().div("tile correct") { +"A" },
-                createHTML().div("tile correct") { +"N" },
-                createHTML().div("tile absent") { +"A" },
+                createHTML().div("tile correct slide") { +"G" },
+                createHTML().div("tile absent slide") { +"U" },
+                createHTML().div("tile absent slide") { +"Y" },
+                createHTML().div("tile correct slide") { +"A" },
+                createHTML().div("tile correct slide") { +"N" },
+                createHTML().div("tile absent slide") { +"A" },
                 createHTML().div("tile hint") {
                     +"↗️"
                     br

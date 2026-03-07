@@ -18,7 +18,7 @@ fun interface CLIView : (Game) -> String {
 
                 private fun instructions(game: Game): String =
                     when (game.state) {
-                        GameState.NEW -> "Start by making a guess."
+                        GameState.NEW -> "Take a guess, any country will do!"
                         GameState.IN_PROGRESS -> {
                             if (game.lastGuessWasInvalid) {
                                 "Invalid country, please make another guess."
