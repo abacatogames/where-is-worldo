@@ -1,6 +1,6 @@
 <h1>
     Where is Wordo?
-    <img src="src/main/resources/static/wordov2.webp" width="75" style="vertical-align: middle; margin-right: 10px;">
+    <img src="src/main/resources/static/wordov3.webp" width="75" style="vertical-align: middle; margin-right: 10px;">
 </h1>
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.x-purple)](https://kotlinlang.org/)
@@ -9,7 +9,7 @@
 [![Gradle](https://img.shields.io/badge/Gradle-build-02303A?logo=gradle&logoColor=white)](https://gradle.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
 
-A server-side rendered browser game written entirely in **Kotlin**, powered by **Ktor** and rendered with **Kotlin HTML** and **CSS DSLs**.
+A server-side rendered browser game written entirely in **Kotlin for the JVM**, powered by **Ktor**, **Kotlin HTML** and **CSS DSLs**.
 
 ---
 ## 🚀 Run
