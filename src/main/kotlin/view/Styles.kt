@@ -101,9 +101,9 @@ val styles = CssBuilder().apply {
         textAlign = TextAlign.center
     }
     rule(".with-image") {
-        backgroundImage = Image("url(/wordov2.webp)")
+        backgroundImage = Image("url(/wordov3.webp)")
         backgroundSize = "contain"
-        backgroundPosition = RelativePosition.rightTop
+        backgroundPosition = RelativePosition.rightTop(yOffset = 0.px, xOffset = clamp(100.px, 8.5.vw, 120.px))
         backgroundRepeat = BackgroundRepeat.noRepeat
         padding = Padding(0.5.vw)
     }
@@ -264,13 +264,17 @@ val styles = CssBuilder().apply {
     }
     rule(".how-to") {
         padding = Padding(12.px)
-        fontSize = 1.1.em
+        fontSize = 1.3.em
         color = Color.blackBean
-        textAlign = TextAlign.justifyAll
+        textAlign = TextAlign.justify
     }
     rule(".how-to.notes") {
         fontSize = 1.em
         fontStyle = FontStyle.italic
+    }
+    rule(".how-to.title") {
+        fontSize = 1.5.em
+        textAlign = TextAlign.center
     }
     footer {
         fontSize = 1.em

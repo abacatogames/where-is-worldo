@@ -35,7 +35,9 @@ class WebViewTest : GameViewContractTest(gameView = WebView.create()) {
                 createHTML().div("tile hint") {
                     +"↗️"
                     br
-                    +"7510 KM"
+                    +"7510"
+                    br
+                    +"KM"
                 }
             )
         assertTrue(expected.all { result.contains(it) })

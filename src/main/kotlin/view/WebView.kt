@@ -132,23 +132,23 @@ fun interface WebView : (Game) -> String {
                         )
                         +distance.direction.toArrow()
                         br
-                        +"${distance.km} KM"
+                        +"${distance.km}"
+                        br
+                        +"KM"
                     }
                 }
 
                 private fun FlowContent.howToPlay() {
                     details {
-                        summary("how-to") { +"How to play?" }
+                        summary("how-to title") { +"How to play?" }
                         p("how-to") {
-                            +"Every day Wordo travels to a different country. You have 6 attempts to discover where he is."
-                            br
-                            +"If a letter in your guess matches a letter in the correct country (regardless of the position), its tile will be green. If it doesn’t, it will be brown."
-                            br
-                            +"Additionally, after each attempt, you will see a hint: a tile showing the distance* and direction** between your guess and the correct country."
-                            br
-                            +"For example, if your guess contains two \"A\"s and only one turns green, that means the correct country has one \"A\" in it."
+                            +"""
+                                Every day Wordo travels to a different country. You have 6 attempts to discover where he is.
+                                If a letter in your guess matches a letter in the correct country (regardless of the position), its tile will be green. If it doesn’t, it will be brown.
+                                Additionally, after each attempt, you will see a hint: a tile showing the distance* and direction** between your guess and the correct country.
+                            """.trimIndent()
                         }
-                        p("how-to") { +"In the following example, the correct country is Greenland:" }
+                        p("how-to") { +"In the following example, \"Guyana\" contains two \"A\"s and only one turns green, meaning that the correct country (Greenland) has only one \"A\"." }
                         gameBoard(validGuesses = listOf(WordGuess("Guyana", "Greenland")), animationEnabled = false)
                         p("how-to notes") {
                             +"* Distances are calculated based on the approx center of both countries."
@@ -161,7 +161,7 @@ fun interface WebView : (Game) -> String {
                 private fun FlowContent.whereIsWordo() {
                     gameBoard(
                         validGuesses = listOf(
-                            WordGuess("wordo", "wrd"),
+                            WordGuess("wordo?", "wrd?"),
                             WordGuess("is", "i"),
                             WordGuess("where", "we"),
                         ),
