@@ -13,8 +13,8 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.3.2")
-    implementation("io.ktor:ktor-server-content-negotiation:3.3.2")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.4.1")
+    implementation("io.ktor:ktor-server-content-negotiation:3.4.1")
     testImplementation(kotlin("test"))
     implementation("org.jetbrains.kotlinx:kotlinx-html:0.12.0")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-css:2025.11.5")
