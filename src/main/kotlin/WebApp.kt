@@ -5,14 +5,17 @@ import com.abacatogames.view.WebView
 import com.abacatogames.view.gameNotFound
 import com.abacatogames.word.WordGuess
 import com.abacatogames.word.generateWordForDate
+import io.ktor.http.CacheControl
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.CachingOptions
 import io.ktor.http.content.TextContent
 import io.ktor.http.withCharset
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.http.content.staticResources
 import io.ktor.server.netty.EngineMain
+import io.ktor.server.plugins.cachingheaders.CachingHeaders
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondRedirect
@@ -47,6 +50,13 @@ fun Application.module() {
             cookie.httpOnly = true
             cookie.extensions["SameSite"] = "lax"
             transform(SessionTransportTransformerEncrypt(hex(secretEncryptKey), hex(secretSignKey)))
+        }
+    }
+    install(CachingHeaders) {
+        options { _, content ->
+            content.contentType?.takeIf { it.match(ContentType.Image.Any) }.let {
+                CachingOptions(CacheControl.MaxAge(maxAgeSeconds = 31536000))
+            }
         }
     }
     routing {

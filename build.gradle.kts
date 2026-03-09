@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm") version "2.2.0"
     kotlin("plugin.serialization") version "2.2.0"
-    id("io.ktor.plugin") version "3.3.2"
+    id("io.ktor.plugin") version "3.4.1"
     application
 }
 
@@ -22,6 +22,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-html-builder")
     implementation("io.ktor:ktor-server-sessions")
+    implementation("io.ktor:ktor-server-caching-headers")
     implementation("net.sf.geographiclib:GeographicLib-Java:2.1")
 }
 

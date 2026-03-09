@@ -19,6 +19,7 @@ import io.ktor.server.html.respondHtml
 import io.ktor.server.routing.RoutingCall
 import kotlinx.html.FlowContent
 import kotlinx.html.FormMethod
+import kotlinx.html.LinkAs
 import kotlinx.html.body
 import kotlinx.html.br
 import kotlinx.html.details
@@ -29,6 +30,7 @@ import kotlinx.html.h1
 import kotlinx.html.h2
 import kotlinx.html.head
 import kotlinx.html.html
+import kotlinx.html.link
 import kotlinx.html.p
 import kotlinx.html.stream.createHTML
 import kotlinx.html.style
@@ -45,6 +47,11 @@ fun interface WebView : (Game) -> String {
                         head {
                             title { +"Where is Wordo?" }
                             style { +styles.toString() }
+                            link {
+                                rel = "preload"
+                                htmlAs = LinkAs.image
+                                href = "/wordov3.webp"
+                            }
                         }
                         body {
                             div("container") {
