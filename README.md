@@ -30,7 +30,7 @@ CSS DSLs**.
 ./gradlew clean run
 ```
 
-### Open:
+Open:
 
 ```
 http://localhost:8080
