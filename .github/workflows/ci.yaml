@@ -33,7 +33,8 @@ jobs:
       - name: Build Docker image
         run: docker build -t app-test .
 
-      - name: Run and test Docker image
-        run: |
-          docker run -p 8080:8080 app-test
-          curl -fsS -m 3 http://localhost:8080/
+      - name: Run Docker image
+        run: docker run -p 8080:8080 app-test
+
+      - name: Test image
+        run: curl -fsS -m 3 http://localhost:8080/
