@@ -32,3 +32,8 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t app-test .
+
+      - name: Run and test Docker image
+        run: |
+          docker run -p 8080:8080 where-is-worldo
+          curl -fsS -m 3 http://localhost:8080/
