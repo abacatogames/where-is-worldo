@@ -34,7 +34,9 @@ jobs:
         run: docker build -t app-test .
 
       - name: Run Docker image
-        run: docker run -p 8080:8080 app-test
+        run: docker run -d -p 8080:8080 app-test
 
-      - name: Test image
-        run: curl -fsS -m 3 http://localhost:8080/
+      - name: Call endpoint
+        run: |
+          sleep 3
+          curl -fsS -m 3 http://localhost:8080/
